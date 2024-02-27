@@ -1,3 +1,3 @@
-import { getMatchingList } from './matching';
+import { matchingHandlers } from './matching';
 
-export const handlers = [getMatchingList];
+export const handlers = [...matchingHandlers];

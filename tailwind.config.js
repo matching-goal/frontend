@@ -18,6 +18,9 @@ export default {
         darkBlueColor: '#2a303c',
         footerDark: '#242933',
       },
+      margin: {
+        navH: '70px',
+      },
     },
   },
   daisyui: {

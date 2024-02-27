@@ -1,7 +1,7 @@
-import MatchingListContainer from '../components/matching/MatchingListContainer';
+import MatchingListContainer from '../components/matchingList/MatchingListContainer';
 
-const MatchingList = () => {
+const MatchingListPage = () => {
   return <MatchingListContainer></MatchingListContainer>;
 };
 
-export default MatchingList;
+export default MatchingListPage;
