@@ -1,6 +1,6 @@
 export interface PreviewMatching {
-  id: number;
-  memberId: number;
+  id: string;
+  memberId: string;
   teamImg: string;
   title: string;
   createdDate: string;
@@ -11,6 +11,8 @@ export interface PreviewMatching {
 }
 
 export interface ViewMatching extends PreviewMatching {
-  img: number[];
+  img: string[];
   modified_date: string;
+  nickName: string;
+  matchDate: string;
 }
