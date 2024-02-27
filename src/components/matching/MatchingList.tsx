@@ -1,37 +1,53 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import useGetMatchingList from '../../queries/useGetMatchingList';
+import MatchingCard from './MatchingCard';
+import { matchingSortList } from '../../constants/sort';
 
 const MatchingList = () => {
+  const [sort, setSort] = useState(matchingSortList[0]);
   const { data: matchingList, isError } = useGetMatchingList();
   if (isError) {
     return <div>데이터 패칭중 에러 발생</div>;
   }
-  return (
-    <div className="grid grid-cols-3 gap-3">
-      {matchingList.map((matching) => (
-        <article key={matching.id} className=" w-[223px] h-[330px] ">
-          <Link to={`/matching/${matching.id}`}>
-            <div className="">
-              <figure className="w-full">
-                <img
-                  src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                  alt="Shoes"
-                  className="rounded-xl h-[223px]"
-                />
-              </figure>
+  const handleSortBtnClick = (matchingSort: {
+    name: string;
+    key: string;
+    type: string;
+  }) => {
+    setSort(matchingSort);
+    const elem = document.activeElement as HTMLElement;
 
-              <div className="">
-                <h2 className="">
-                  {matching.title.length > 11
-                    ? matching.title.slice(0, 14) + '...'
-                    : matching.title}
-                </h2>
-                <p className=" text-xs">{matching.stadium}</p>
-              </div>
-            </div>
-          </Link>
-        </article>
-      ))}
+    if (elem) {
+      elem?.blur();
+    }
+  };
+  return (
+    <div>
+      <div className="dropdown">
+        <label tabIndex={0} className="btn m-1">
+          {sort.name}
+        </label>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52"
+        >
+          {matchingSortList.map((matchingSort) => (
+            <li
+              key={matchingSort.name}
+              onClick={() => {
+                handleSortBtnClick(matchingSort);
+              }}
+            >
+              <span>{matchingSort.name}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="grid grid-cols-3 gap-3">
+        {matchingList.map((matching) => (
+          <MatchingCard key={matching.id} matching={matching}></MatchingCard>
+        ))}
+      </div>
     </div>
   );
 };
