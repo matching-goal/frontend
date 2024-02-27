@@ -14,6 +14,9 @@ const client = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 3,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      refetchInterval: false,
     },
   },
 });
