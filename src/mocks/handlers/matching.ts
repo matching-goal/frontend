@@ -21,6 +21,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '2',
@@ -42,6 +43,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '3',
@@ -63,6 +65,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '4',
@@ -84,6 +87,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '5',
@@ -105,6 +109,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '6',
@@ -126,6 +131,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '7',
@@ -147,6 +153,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '8',
@@ -168,6 +175,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '9',
@@ -189,6 +197,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '10',
@@ -210,6 +219,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '11',
@@ -231,6 +241,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '12',
@@ -252,6 +263,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
   {
     id: '13',
@@ -273,6 +285,7 @@ let matchingList: ViewMatching[] = [
     ],
     nickName: '김땡땡',
     matchDate: '2024-05-12',
+    content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
   },
 ];
 const getMatchingList = http.get('/api/matching/list', async () => {

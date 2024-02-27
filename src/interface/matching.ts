@@ -15,4 +15,5 @@ export interface ViewMatching extends PreviewMatching {
   modified_date: string;
   nickName: string;
   matchDate: string;
+  content: string;
 }
