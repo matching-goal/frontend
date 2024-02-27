@@ -4,7 +4,7 @@ import MatchingList from './MatchingList';
 const MatchingListContainer = () => {
   return (
     <main>
-      <section className="max-w-screen-lg mx-auto">
+      <section className=" max-w-screen-md mx-auto">
         <h1 className="text-center font-bold text-[30px]">매칭 목록</h1>
         <Suspense fallback={<div>로딩중~</div>}>
           <MatchingList></MatchingList>
