@@ -1,9 +1,9 @@
 export interface PreviewMatching {
   id: number;
-  member_id: number;
+  memberId: number;
   teamImg: string;
   title: string;
-  created_date: Date;
+  createdDate: string;
   count: number;
   status: string;
   requestCount: number;
@@ -12,7 +12,5 @@ export interface PreviewMatching {
 
 export interface ViewMatching extends PreviewMatching {
   img: number[];
-  modified_date: Date;
+  modified_date: string;
 }
-
-
