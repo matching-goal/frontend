@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import DateSelectorBtn from '../button/DateSelectorBtn';
 
 const CreateOrUpdateMatchingContainer = () => {
   const params = useParams();
@@ -7,7 +8,7 @@ const CreateOrUpdateMatchingContainer = () => {
   return (
     <article className="mt-32 max-w-screen-md mx-auto">
       <section>
-        <button></button>
+        <DateSelectorBtn></DateSelectorBtn>
       </section>
       <section>
         <h1 className="text-3xl"></h1>
