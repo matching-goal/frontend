@@ -1,4 +1,4 @@
-import MatchingListContainer from '../components/matchingList/MatchingListContainer';
+import MatchingListContainer from '../../components/matchingList/MatchingListContainer';
 
 const MatchingListPage = () => {
   return <MatchingListContainer></MatchingListContainer>;
