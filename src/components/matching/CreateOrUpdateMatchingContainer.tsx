@@ -1,14 +1,34 @@
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import DateSelectorBtn from '../button/DateSelectorBtn';
+import TimeSelectorBtn from '../button/TimeSelectorBtn';
 
 const CreateOrUpdateMatchingContainer = () => {
-  const params = useParams();
-  const id = params.id as 'create' | 'update';
-
+  const [hour, setHour] = useState<string>('00');
+  const [minute, setMinute] = useState<string>('00');
+  const [date, setDate] = useState<string>('날짜 선택');
   return (
     <article className="mt-32 max-w-screen-md mx-auto">
       <section>
-        <DateSelectorBtn></DateSelectorBtn>
+        <div className="flex relative">
+          <div className="mr-5">
+            <DateSelectorBtn
+              onChange={(date) => {
+                setDate(date);
+              }}
+              date={date}
+            ></DateSelectorBtn>
+          </div>
+          <div>
+            <TimeSelectorBtn
+              onChange={(hour, minute) => {
+                setHour(hour);
+                setMinute(minute);
+              }}
+              hour={hour}
+              minute={minute}
+            ></TimeSelectorBtn>
+          </div>
+        </div>
       </section>
       <section>
         <h1 className="text-3xl"></h1>
