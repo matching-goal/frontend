@@ -2,10 +2,7 @@ import useGetMatchingList from '../../queries/useGetMatchingList';
 import MatchingCard from './MatchingCard';
 
 const MatchingList = () => {
-  const { data: matchingList, isError } = useGetMatchingList();
-  if (isError) {
-    return <div>데이터 패칭중 에러 발생</div>;
-  }
+  const { data: matchingList } = useGetMatchingList();
 
   return (
     <div>
