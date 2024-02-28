@@ -38,7 +38,7 @@ const TimeSelectorBtn = ({ onChange, hour, minute }: Props) => {
         {`${hour}시 ${minute}분`}
       </button>
       {show && (
-        <div className="absolute flex flex-col items-end">
+        <div className="absolute flex flex-col items-end bg-white p-10 border border-gray-300 rounded-3xl">
           <div className=" flex ">
             <Swiper
               className="h-24"
