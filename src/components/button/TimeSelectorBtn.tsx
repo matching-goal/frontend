@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -11,6 +11,7 @@ interface Props {
 }
 const TimeSelectorBtn = ({ onChange, hour, minute }: Props) => {
   const [show, setShow] = useState<boolean>(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   const HOURS = Array.from({ length: 24 }, (_, i) => i);
   const MiNUTE = Array.from({ length: 60 }, (_, i) => i);
@@ -18,9 +19,21 @@ const TimeSelectorBtn = ({ onChange, hour, minute }: Props) => {
   const handleBtnClick = () => {
     setShow(!show);
   };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setShow(false);
+      }
+    };
 
+    window.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   return (
-    <div className=" relative">
+    <div className=" relative" ref={ref}>
       <button className="btn border mb-5 border-gray-300" onClick={handleBtnClick}>
         {`${hour}시 ${minute}분`}
       </button>
