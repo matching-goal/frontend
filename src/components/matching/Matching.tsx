@@ -34,7 +34,9 @@ const Matching = () => {
           <button onClick={handleDeleteBtnClick}>삭제</button>
         </div>
       </section>
-      <section className="min-h-[450px]"></section>
+      <section className="min-h-[450px] mt-3">
+        <p>{matching.content}</p>
+      </section>
       <section className="flex justify-between items-center">
         <div>
           <p className="mb-4">{matching.stadium}</p>
