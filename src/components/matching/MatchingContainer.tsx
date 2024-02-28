@@ -1,12 +1,15 @@
-import { Suspense } from 'react';
-import Matching from './Matching';
+import React, { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+const Matching = React.lazy(() => import('./Matching'));
 
 const MatchingContainer = () => {
   return (
     <main className=" m-navH max-w-screen-md mx-auto ">
-      <Suspense fallback={<div>로딩중...</div>}>
-        <Matching></Matching>
-      </Suspense>
+      <ErrorBoundary fallback={<h1>데이터 패칭 중 에러 발생</h1>}>
+        <Suspense fallback={<div>로딩중</div>}>
+          <Matching></Matching>
+        </Suspense>
+      </ErrorBoundary>
     </main>
   );
 };

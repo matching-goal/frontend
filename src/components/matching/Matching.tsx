@@ -4,11 +4,10 @@ import { Link, useParams } from 'react-router-dom';
 const Matching = () => {
   const params = useParams();
   const id = params.id as string;
-  const { data: matching, isError } = useGetMatching(id);
+  const { data: matching } = useGetMatching(id);
+
   const useMatchingDeleteMutation = useMatchingDelete();
-  if (isError) {
-    return <div>데이터 패칭 중 에러 발생</div>;
-  }
+
   const handleDeleteBtnClick = () => {
     if (!confirm('삭제 하시겠습니까?')) {
       return;

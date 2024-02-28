@@ -21,6 +21,9 @@ export default {
       margin: {
         navH: '70px',
       },
+      height: {
+        filterAndSortBtn: '45px',
+      },
     },
   },
   daisyui: {
