@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import { formatDate } from '../../utils/date';
+import { Value } from '../../type/reactCalendar';
+type dateChangeHandler = (date: string) => void;
 
-type ValuePiece = Date | null;
+interface Props {
+  onChange: dateChangeHandler;
+  date: string;
+}
 
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
-const DateSelectorBtn = () => {
+const DateSelectorBtn = ({ onChange, date }: Props) => {
   const [show, setShow] = useState<boolean>(false);
-  const [date, setDate] = useState<string>('날짜 선택');
+  const ref = useRef<HTMLDivElement>(null);
   const handleBtnClick = () => {
     setShow(!show);
   };
@@ -17,13 +20,25 @@ const DateSelectorBtn = () => {
       return;
     }
 
-    setDate(formatDate(value));
+    onChange(formatDate(value));
     setShow(false);
   };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setShow(false);
+      }
+    };
 
+    window.addEventListener('click', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
   return (
-    <div className=" relative">
-      <button className="btn border border-gray-300" onClick={handleBtnClick}>
+    <div className=" " ref={ref}>
+      <button className="btn border border-gray-300 mb-4" onClick={handleBtnClick}>
         {date}
       </button>
       {show && (
