@@ -293,9 +293,13 @@ const getMatchingList = http.get('/api/matching/list', async () => {
   return HttpResponse.json(matchingList);
 });
 
-const getMatching = http.get('/api/matching/:id', async ({ params }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getMatching = http.get('/api/matching/:id', async ({ params }): Promise<any> => {
   const id = params.id as string;
   const matching = matchingList.filter((matching) => matching.id === id);
+  if (matching.length === 0) {
+    return HttpResponse.json({ error: '존재하지 않는 id입니다.' }, { status: 404 });
+  }
   await delay(1000);
   return HttpResponse.json(...matching);
 });
