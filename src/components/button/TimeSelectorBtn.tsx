@@ -14,7 +14,7 @@ const TimeSelectorBtn = ({ onChange, hour, minute }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const HOURS = Array.from({ length: 24 }, (_, i) => i);
-  const MiNUTE = Array.from({ length: 60 }, (_, i) => i);
+  const MINUTE = Array.from({ length: 60 }, (_, i) => i);
 
   const handleBtnClick = () => {
     setShow(!show);
@@ -77,7 +77,7 @@ const TimeSelectorBtn = ({ onChange, hour, minute }: Props) => {
                 onChange(hour, (s.realIndex + '').padStart(2, '0'));
               }}
             >
-              {MiNUTE.map((hour) => (
+              {MINUTE.map((hour) => (
                 <SwiperSlide key={hour}>
                   {({ isActive }) => (
                     <div className={`${isActive && 'underline'}`}>
