@@ -38,6 +38,7 @@ const AddressSelectorBtn = ({ setAddress, address }: Props) => {
     <div>
       <button
         className="btn border-gray-300"
+        type="button"
         onClick={() => {
           setPostCodeActive(true);
           ref.current?.showModal();

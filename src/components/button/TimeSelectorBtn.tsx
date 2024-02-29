@@ -34,7 +34,11 @@ const TimeSelectorBtn = ({ onChange, hour, minute }: Props) => {
   }, []);
   return (
     <div className=" relative" ref={ref}>
-      <button className="btn border mb-5 border-gray-300" onClick={handleBtnClick}>
+      <button
+        className="btn border  border-gray-300"
+        type="button"
+        onClick={handleBtnClick}
+      >
         {`${hour}시 ${minute}분`}
       </button>
       {show && (
