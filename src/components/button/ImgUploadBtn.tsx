@@ -1,9 +1,8 @@
-import { useState } from 'react';
-
-const ImageUploadBtn = () => {
-  const [files, setFiles] = useState<Array<FileList | File>>([]);
-  const [previewFiles, setPreviewFiles] = useState<Array<string>>([]);
-
+interface Props {
+  setImages: React.Dispatch<React.SetStateAction<string[]>>;
+  images: string[];
+}
+const ImageUploadBtn = ({ setImages, images }: Props) => {
   return (
     <div>
       <label className=" btn border border-gray-300" htmlFor="inputFile">
@@ -12,23 +11,22 @@ const ImageUploadBtn = () => {
           className=" w-0 h-0 cursor-pointer"
           type="file"
           id="inputFile"
+          accept="image/jpeg, image/png"
           onChange={(e) => {
             if (!e.target.files) return;
+            if (!e.target.files[0].type.startsWith('image/')) {
+              alert('이미지 파일만 업로드 가능합니다');
+              return;
+            }
             const reader = new FileReader();
             reader.onload = (e) => {
-              setPreviewFiles([...previewFiles, e.target?.result as string]);
+              setImages([...images, e.target?.result as string]);
             };
             reader.readAsDataURL(e.target.files[0]);
-
-            setFiles([...files, ...e.target.files]);
+            e.target.value = '';
           }}
         />
       </label>
-      {previewFiles.map((previewFile, idx) => (
-        <div key={previewFile + idx}>
-          <img src={previewFile} alt="" className=" w-[150px] h-[150px]" />
-        </div>
-      ))}
     </div>
   );
 };
