@@ -3,9 +3,10 @@ import DaumPostcodeEmbed, { Address } from 'react-daum-postcode';
 
 interface Props {
   setAddress: React.Dispatch<React.SetStateAction<string>>;
+  address: string;
 }
 
-const AddressSelectorBtn = ({ setAddress }: Props) => {
+const AddressSelectorBtn = ({ setAddress, address }: Props) => {
   const [isPostCodeActive, setPostCodeActive] = useState<boolean>(true);
   const ref = useRef<HTMLDialogElement>(null);
 
@@ -37,12 +38,13 @@ const AddressSelectorBtn = ({ setAddress }: Props) => {
     <div>
       <button
         className="btn border-gray-300"
+        type="button"
         onClick={() => {
           setPostCodeActive(true);
           ref.current?.showModal();
         }}
       >
-        구장 주소 선택
+        {address}
       </button>
       <dialog id="my_modal_2" className="modal" ref={ref}>
         {isPostCodeActive && (

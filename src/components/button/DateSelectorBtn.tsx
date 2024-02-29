@@ -38,7 +38,11 @@ const DateSelectorBtn = ({ onChange, date }: Props) => {
   }, []);
   return (
     <div className="" ref={ref}>
-      <button className="btn border border-gray-300 mb-4" onClick={handleBtnClick}>
+      <button
+        className="btn border border-gray-300 "
+        type="button"
+        onClick={handleBtnClick}
+      >
         {date}
       </button>
       {show && (

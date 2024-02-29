@@ -14,7 +14,7 @@ const TimeSelectorBtn = ({ onChange, hour, minute }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const HOURS = Array.from({ length: 24 }, (_, i) => i);
-  const MiNUTE = Array.from({ length: 60 }, (_, i) => i);
+  const MINUTE = Array.from({ length: 60 }, (_, i) => i);
 
   const handleBtnClick = () => {
     setShow(!show);
@@ -34,11 +34,15 @@ const TimeSelectorBtn = ({ onChange, hour, minute }: Props) => {
   }, []);
   return (
     <div className=" relative" ref={ref}>
-      <button className="btn border mb-5 border-gray-300" onClick={handleBtnClick}>
+      <button
+        className="btn border  border-gray-300"
+        type="button"
+        onClick={handleBtnClick}
+      >
         {`${hour}시 ${minute}분`}
       </button>
       {show && (
-        <div className="absolute flex flex-col items-end">
+        <div className="absolute flex flex-col items-end bg-white p-10 border border-gray-300 rounded-3xl">
           <div className=" flex ">
             <Swiper
               className="h-24"
@@ -77,7 +81,7 @@ const TimeSelectorBtn = ({ onChange, hour, minute }: Props) => {
                 onChange(hour, (s.realIndex + '').padStart(2, '0'));
               }}
             >
-              {MiNUTE.map((hour) => (
+              {MINUTE.map((hour) => (
                 <SwiperSlide key={hour}>
                   {({ isActive }) => (
                     <div className={`${isActive && 'underline'}`}>

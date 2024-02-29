@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import 'react-calendar/dist/Calendar.css';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
