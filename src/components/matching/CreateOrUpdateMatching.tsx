@@ -32,43 +32,7 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
   const CreateMatchingMutation = useCreateMatching();
   const PatchMatchingMutation = usePatchMatching();
   return (
-    <form
-      action=""
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (date === '날짜 선택') {
-          alert('날짜를 지정해주세요');
-          return;
-        }
-        if (address === '구장 주소 선택') {
-          alert('구장 위치를 선택해주세요');
-          return;
-        }
-        if (type === 'create') {
-          const data = {
-            title,
-            content,
-            img: images,
-            memberId: 'a33',
-            matchingDate: date,
-            matchingTime: `${hour}:${minute}`,
-            stadium: address,
-          };
-          CreateMatchingMutation.mutate(data);
-        }
-        if (type === 'update') {
-          const data = {
-            title,
-            content,
-            img: images,
-            matchingDate: date,
-            matchingTime: `${hour}:${minute}`,
-            stadium: address,
-          };
-          PatchMatchingMutation.mutate({ data, id: matching?.id as string });
-        }
-      }}
-    >
+    <>
       <section className="flex justify-between items-center mb-5">
         <div className="flex relative items-center">
           <div className="mr-5">
@@ -100,69 +64,106 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
           ></AddressSelectorBtn>
         </div>
       </section>
-      <section>
-        <input
-          className="text-3xl outline-none border border-b-black pb-2 w-full border-white"
-          placeholder="제목을 입력해주세요"
-          required
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        />
-      </section>
-      <section className="min-h-[450px] mt-3">
-        <textarea
-          className="w-full h-[350px] outline-none "
-          placeholder="내용을 입력해주세요"
-          required
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-          }}
-        ></textarea>
-      </section>
-      <section className="flex justify-between items-center">
-        <div className="h-[150px]">
-          <Carousel
-            showArrows={false}
-            infiniteLoop={true}
-            showStatus={false}
-            showThumbs={false}
-            selectedItem={images.length - 1}
-            className="w-[200px] "
-          >
-            {images.map((image, idx) => (
-              <div key={idx} className=" w-full h-[150px] relative">
-                <img src={image} alt="" className="w-full h-full -z-20" />
-                <button
-                  type="button"
-                  className=" absolute  text-white right-1 top-1 rounded-full bg-black h-8 w-8 opacity-60 flex items-center justify-center"
-                  onClick={() => {
-                    setImages(images.filter((_, filterIdx) => idx !== filterIdx));
-                  }}
-                >
-                  <div className="">X</div>
-                </button>
-              </div>
-            ))}
-          </Carousel>
-        </div>
-        <div>
-          <button
-            type="submit"
-            className="w-[130px] h-[30px] border rounded-2xl border-black"
-            disabled={
-              type === 'create'
-                ? CreateMatchingMutation.isPending
-                : PatchMatchingMutation.isPending
-            }
-          >
-            {type === 'update' ? '글 수정' : '글 작성'}
-          </button>
-        </div>
-      </section>
-    </form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (date === '날짜 선택') {
+            alert('날짜를 지정해주세요');
+            return;
+          }
+          if (address === '구장 주소 선택') {
+            alert('구장 위치를 선택해주세요');
+            return;
+          }
+          if (type === 'create') {
+            const data = {
+              title,
+              content,
+              img: images,
+              memberId: 'a33',
+              matchingDate: date,
+              matchingTime: `${hour}:${minute}`,
+              stadium: address,
+            };
+            CreateMatchingMutation.mutate(data);
+          }
+          if (type === 'update') {
+            const data = {
+              title,
+              content,
+              img: images,
+              matchingDate: date,
+              matchingTime: `${hour}:${minute}`,
+              stadium: address,
+            };
+            PatchMatchingMutation.mutate({ data, id: matching?.id as string });
+          }
+        }}
+      >
+        <section>
+          <input
+            className="text-3xl outline-none border border-b-black pb-2 w-full border-white"
+            placeholder="제목을 입력해주세요"
+            required
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
+        </section>
+        <section className="min-h-[450px] mt-3">
+          <textarea
+            className="w-full h-[350px] outline-none "
+            placeholder="내용을 입력해주세요"
+            required
+            value={content}
+            onChange={(e) => {
+              setContent(e.target.value);
+            }}
+          ></textarea>
+        </section>
+        <section className="flex justify-between items-center">
+          <div className="h-[150px]">
+            <Carousel
+              showArrows={false}
+              infiniteLoop={true}
+              showStatus={false}
+              showThumbs={false}
+              selectedItem={images.length - 1}
+              className="w-[200px] "
+            >
+              {images.map((image, idx) => (
+                <div key={idx} className=" w-full h-[150px] relative">
+                  <img src={image} alt="" className="w-full h-full -z-20" />
+                  <button
+                    type="button"
+                    className=" absolute  text-white right-1 top-1 rounded-full bg-black h-8 w-8 opacity-60 flex items-center justify-center"
+                    onClick={() => {
+                      setImages(images.filter((_, filterIdx) => idx !== filterIdx));
+                    }}
+                  >
+                    <div className="">X</div>
+                  </button>
+                </div>
+              ))}
+            </Carousel>
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="w-[130px] h-[30px] border rounded-2xl border-black"
+              disabled={
+                type === 'create'
+                  ? CreateMatchingMutation.isPending
+                  : PatchMatchingMutation.isPending
+              }
+            >
+              {type === 'update' ? '글 수정' : '글 작성'}
+            </button>
+          </div>
+        </section>
+      </form>
+    </>
   );
 };
 
