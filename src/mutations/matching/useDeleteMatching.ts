@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import API from '../api/api';
+import API from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
-const useMatchingDelete = () => {
+const useDeleteMatching = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return useMutation({
@@ -15,4 +15,4 @@ const useMatchingDelete = () => {
   });
 };
 
-export default useMatchingDelete;
+export default useDeleteMatching;

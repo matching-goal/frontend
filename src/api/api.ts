@@ -18,6 +18,10 @@ const API = {
     const res = await axios.put(`${BASE_API_URL + url}`, body);
     return res;
   },
+  patch: async <T>(url: string, body: T) => {
+    const res = await axios.patch(`${BASE_API_URL + url}`, body);
+    return res;
+  },
 };
 
 export default API;
