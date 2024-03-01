@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import API from '../api/api';
+import API from '../../api/api';
 import { useNavigate } from 'react-router-dom';
-import { CreateMatching } from '../interface/matching';
+import { CreateMatching } from '../../interface/matching';
 
 const useCreateMatching = () => {
   const navigate = useNavigate();
