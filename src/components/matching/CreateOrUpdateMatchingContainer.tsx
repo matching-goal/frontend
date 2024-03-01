@@ -5,7 +5,7 @@ import AddressSelectorBtn from '../button/AddressSelectorBtn';
 import ImageUploadBtn from '../button/ImgUploadBtn';
 import { Carousel } from 'react-responsive-carousel';
 import { CreateMatching } from '../../interface/matching';
-import useMatchingCreate from '../../mutations/useMatchingCreate';
+import useCreateMatching from '../../mutations/useCreateMatching';
 
 const CreateOrUpdateMatchingContainer = () => {
   const [hour, setHour] = useState<string>('00');
@@ -16,7 +16,7 @@ const CreateOrUpdateMatchingContainer = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
 
-  const matchingCreateMutation = useMatchingCreate();
+  const matchingCreateMutation = useCreateMatching();
 
   return (
     <article className="mt-20 max-w-screen-md mx-auto ">

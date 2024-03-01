@@ -3,7 +3,7 @@ import API from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { CreateMatching } from '../interface/matching';
 
-const useMatchingCreate = () => {
+const useCreateMatching = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return useMutation({
@@ -17,4 +17,4 @@ const useMatchingCreate = () => {
   });
 };
 
-export default useMatchingCreate;
+export default useCreateMatching;

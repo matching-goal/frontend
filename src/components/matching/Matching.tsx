@@ -1,4 +1,4 @@
-import useMatchingDelete from '../../mutations/useMatchingDelete';
+import useDeleteMatching from '../../mutations/useDeleteMatching';
 import useGetMatching from '../../queries/useGetMatching';
 import { Link, useParams } from 'react-router-dom';
 const Matching = () => {
@@ -6,7 +6,7 @@ const Matching = () => {
   const id = params.id as string;
   const { data: matching } = useGetMatching(id);
 
-  const useMatchingDeleteMutation = useMatchingDelete();
+  const useMatchingDeleteMutation = useDeleteMatching();
 
   const handleDeleteBtnClick = () => {
     if (!confirm('삭제 하시겠습니까?')) {
