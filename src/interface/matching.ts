@@ -3,6 +3,8 @@ interface MatchingBase {
   title: string;
   stadium: string;
   content: string;
+  matchingDate: string;
+  matchingTime: string;
 }
 
 export interface PreviewMatching extends MatchingBase {
@@ -18,10 +20,10 @@ export interface ViewMatching extends PreviewMatching {
   img: string[];
   modified_date: string;
   nickName: string;
-  matchDate: string;
 }
 
 export interface CreateMatching extends MatchingBase {
   img: string[];
-  matchDate: string;
 }
+
+export interface PatchMatching extends Omit<MatchingBase, 'memberId'> {}
