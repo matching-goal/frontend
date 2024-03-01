@@ -1,4 +1,5 @@
-import useDeleteMatching from '../../mutations/useDeleteMatching';
+import { Carousel } from 'react-responsive-carousel';
+import useDeleteMatching from '../../mutations/matching/useDeleteMatching';
 import useGetMatching from '../../queries/useGetMatching';
 import { Link, useParams } from 'react-router-dom';
 const Matching = () => {
@@ -16,7 +17,7 @@ const Matching = () => {
   };
 
   return (
-    <article className="mt-32">
+    <article className="">
       <section>
         <h1 className="text-3xl">{matching.title}</h1>
       </section>
@@ -29,17 +30,34 @@ const Matching = () => {
           <p>{matching.createdDate}</p>
         </Link>
         <div className="flex items-center">
-          <button className="mr-5">수정</button>
+          <Link to={`/updateMatching/${matching.id}`}>
+            <button className="mr-5">수정</button>
+          </Link>
           <button onClick={handleDeleteBtnClick}>삭제</button>
         </div>
       </section>
-      <section className="min-h-[450px] mt-3">
+      <section className="min-h-[450px] mt-3 flex flex-col justify-between">
         <p>{matching.content}</p>
+        <div>
+          <Carousel
+            showArrows={true}
+            infiniteLoop={true}
+            autoPlay={true}
+            showThumbs={false}
+            className="w-[200px]"
+          >
+            {matching.img.map((image, idx) => (
+              <div key={idx} className=" w-full h-[200px]">
+                <img src={image} alt="" className="w-full h-full" />
+              </div>
+            ))}
+          </Carousel>
+        </div>
       </section>
       <section className="flex justify-between items-center">
         <div>
           <p className="mb-4">{matching.stadium}</p>
-          <p>{matching.matchDate}</p>
+          <p>{`${matching.matchingDate} ${matching.matchingTime}`}</p>
         </div>
         <div>
           <button className="w-[130px] h-[30px] border rounded-2xl border-black mr-4">
