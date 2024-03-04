@@ -17,6 +17,9 @@ const TimeSelectorBtn = ({ onChange, hour, minute }: Props) => {
   const MINUTE = Array.from({ length: 60 }, (_, i) => i);
 
   const handleBtnClick = () => {
+    if (hour === '' || minute === '') {
+      onChange('00', '00');
+    }
     setShow(!show);
   };
   useEffect(() => {
@@ -39,7 +42,7 @@ const TimeSelectorBtn = ({ onChange, hour, minute }: Props) => {
         type="button"
         onClick={handleBtnClick}
       >
-        {`${hour}시 ${minute}분`}
+        {hour === '' || minute === '' ? `${hour}${minute}` : `${hour}시 ${minute}분`}
       </button>
       {show && (
         <div className="absolute flex flex-col items-end bg-white p-10 border border-gray-300 rounded-3xl">
