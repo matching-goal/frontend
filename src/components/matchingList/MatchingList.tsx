@@ -1,8 +1,11 @@
 import useGetMatchingList from '../../queries/useGetMatchingList';
 import MatchingCard from './MatchingCard';
 
-const MatchingList = () => {
-  const { data: matchingList } = useGetMatchingList();
+interface Props {
+  query: string;
+}
+const MatchingList = ({ query }: Props) => {
+  const { data: matchingList } = useGetMatchingList(query);
 
   return (
     <div>
