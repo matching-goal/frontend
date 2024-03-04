@@ -95,9 +95,15 @@ let matchingList: ViewMatching[] = [
     matchingTime: '13:15',
   },
 ];
-const getMatchingList = http.get('/api/matching/list', async () => {
+const getMatchingList = http.get('/api/matching/list', async ({ request }) => {
+  let res = [...matchingList];
+  const url = new URL(request.url);
+  const date = url.searchParams.get('date');
+
+  date && (res = res.filter((matching) => matching.matchingDate === date));
+
   await delay(1000);
-  return HttpResponse.json(matchingList);
+  return HttpResponse.json(res);
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
