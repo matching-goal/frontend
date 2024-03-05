@@ -23,8 +23,8 @@ const getUser = http.get('/api/myPage/:id', async ({ params }): Promise<any> => 
   await delay(1000);
   return HttpResponse.json(...user);
 });
-
-const createUser = http.post('/api/singUp', async ({ request }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const createUser = http.post('/api/singUp', async ({ request }): Promise<any> => {
   const body = (await request.json()) as CreateUser;
   const newUser: UserInfo = {
     ...body,
@@ -35,4 +35,15 @@ const createUser = http.post('/api/singUp', async ({ request }) => {
   return HttpResponse.json(newUser);
 });
 
-export const userHandlers = [getUser, createUser];
+const checkSameNickname = http.post('/api/auth/checkNickname', async ({ request }) => {
+  const body = (await request.json()) as { nickName: string };
+  const checkSameNickName =
+    userList.filter((user) => user.nickName === body.nickName).length > 0;
+
+  if (checkSameNickName) {
+    return HttpResponse.json({ check: false });
+  }
+  return HttpResponse.json({ check: true });
+});
+
+export const userHandlers = [getUser, createUser, checkSameNickname];
