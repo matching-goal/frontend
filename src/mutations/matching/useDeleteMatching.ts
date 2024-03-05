@@ -1,16 +1,17 @@
+'use client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import API from '../../api/api';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 const useDeleteMatching = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => API.delete(`/api/matching/${id}`),
 
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: ['PreviewMatchingList'] });
-      navigate('/matching');
+      router.push('/matchingList');
     },
   });
 };

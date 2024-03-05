@@ -1,3 +1,5 @@
+'use client';
+
 import React, { Suspense, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import DateSelectorBtn from '../button/DateSelectorBtn';

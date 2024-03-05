@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { PreviewMatching } from '../../interface/matching';
 interface Props {
   matching: PreviewMatching;
@@ -6,7 +6,7 @@ interface Props {
 const MatchingCard = ({ matching }: Props) => {
   return (
     <article className=" w-[223px] h-[330px] ">
-      <Link to={`/matching/${matching.id}`}>
+      <Link href={`/matching/${matching.id}`}>
         <div className="">
           <figure className="">
             <img

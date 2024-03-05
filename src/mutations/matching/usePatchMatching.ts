@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import API from '../../api/api';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { PatchMatching, ViewMatching } from '../../interface/matching';
 import { AxiosResponse } from 'axios';
 
@@ -10,14 +10,14 @@ interface Parameter {
 }
 
 const usePatchMatching = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ data, id }: Parameter) => API.patch(`/api/matching/${id}`, data),
 
     onSuccess: (req: AxiosResponse<ViewMatching>) => {
       queryClient.setQueryData(['matching', req.data.id], req.data);
-      navigate(`/matching/${req.data.id}`);
+      router.push(`/matching/${req.data.id}`);
     },
   });
 };

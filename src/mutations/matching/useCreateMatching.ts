@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import API from '../../api/api';
-import { useNavigate } from 'react-router-dom';
 import { CreateMatching } from '../../interface/matching';
+import { useRouter } from 'next/navigation';
 
 const useCreateMatching = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: CreateMatching) => API.post(`/api/matching`, data),
@@ -12,7 +12,7 @@ const useCreateMatching = () => {
     onSuccess: (data) => {
       queryClient.removeQueries({ queryKey: ['PreviewMatchingList'] });
       queryClient.setQueryData(['matching', data.data.id], data.data);
-      navigate(`/matching/${data.data.id}`);
+      router.push(`/matching/${data.data.id}`);
     },
   });
 };

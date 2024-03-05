@@ -1,3 +1,5 @@
+'use client';
+
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { PreviewMatching } from '../interface/matching';
 import API from '../api/api';
