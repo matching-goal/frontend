@@ -6,10 +6,12 @@ let userList: UserInfo[] = [
     id: '1',
     email: 'aaa.@naver.com',
     name: '김이박',
-    nickName: '김땡땡',
+    nickname: '김땡땡',
     introduction: '',
     region: '경기도 성남시',
     password: '123456789a',
+    teamImg:
+      'https://upload.wikimedia.org/wikipedia/ko/b/b1/FC_%EB%B0%94%EB%A5%B4%EC%85%80%EB%A1%9C%EB%82%98_%EB%A1%9C%EA%B3%A0.svg',
   },
 ];
 
@@ -24,26 +26,45 @@ const getUser = http.get('/api/myPage/:id', async ({ params }): Promise<any> => 
   return HttpResponse.json(...user);
 });
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const createUser = http.post('/api/singUp', async ({ request }): Promise<any> => {
+const createUser = http.post('api/auth/sign-up', async ({ request }): Promise<any> => {
   const body = (await request.json()) as CreateUser;
   const newUser: UserInfo = {
     ...body,
     introduction: '',
     id: userList[userList.length - 1].id + 1,
+    teamImg: '',
   };
   userList = [...userList, newUser];
   return HttpResponse.json(newUser);
 });
 
 const checkSameNickname = http.post('/api/auth/checkNickname', async ({ request }) => {
-  const body = (await request.json()) as { nickName: string };
+  const body = (await request.json()) as { nickname: string };
   const checkSameNickName =
-    userList.filter((user) => user.nickName === body.nickName).length > 0;
+    userList.filter((user) => user.nickname === body.nickname).length > 0;
 
   if (checkSameNickName) {
-    return HttpResponse.json({ check: false });
+    return HttpResponse.json('false');
   }
-  return HttpResponse.json({ check: true });
+  return HttpResponse.json('true');
 });
 
-export const userHandlers = [getUser, createUser, checkSameNickname];
+const sendAuthEmail = http.post('/api/auth/mails/send-verification', async () => {
+  return HttpResponse.json('true');
+});
+
+const verifyAuthEmailCode = http.post('/api/auth/mails/verify', async ({ request }) => {
+  const body = (await request.json()) as { email: string; code: string };
+  if (body.code === '12345') {
+    return HttpResponse.json('true');
+  } else {
+    return HttpResponse.json('false');
+  }
+});
+export const userHandlers = [
+  getUser,
+  createUser,
+  checkSameNickname,
+  sendAuthEmail,
+  verifyAuthEmailCode,
+];

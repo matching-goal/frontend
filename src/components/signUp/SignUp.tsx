@@ -1,20 +1,26 @@
 import { useState } from 'react';
 import { CreateUser } from '../../interface/user';
 import API from '../../api/api';
+import { emailRegex } from '../../utils/regex';
 
 const SignUp = () => {
   const [userData, setUserData] = useState<CreateUser>({
     name: '',
     email: '',
     password: '',
-    nickName: '',
+    nickname: '',
     region: '',
   });
   const [passwordCheck, setPasswordCheck] = useState<string>('');
   const [isCheckSameNickname, setIsCheckSameNickname] = useState<boolean>(false);
   const [isCheckEmailAuth, setIsCheckEmailAuth] = useState<boolean>(false);
+  const [isEmailAuthActive, setIsEmailAuthActive] = useState<boolean>(false);
+  const [emailAuthCode, setEmailAuthCode] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === 'nickname') {
+      setIsCheckSameNickname(false);
+    }
     setUserData({
       ...userData,
       [e.target.name]: e.target.value,
@@ -25,6 +31,12 @@ const SignUp = () => {
     e.preventDefault();
     if (userData.password !== passwordCheck) {
       return alert('패스워드가 서로 다릅니다');
+    }
+    if (!isCheckSameNickname) {
+      return alert('닉네임 중복체크를 해주세요');
+    }
+    if (!isCheckEmailAuth) {
+      return alert('이메일 인증을 해주세요');
     }
   };
 
@@ -58,17 +70,56 @@ const SignUp = () => {
                 className="input input-bordered "
                 required
                 onChange={handleChange}
+                disabled={isCheckEmailAuth}
               />
             </label>
             <div className="flex justify-between">
-              <input type="text" placeholder="인증번호 입력" />
+              <input
+                type="text"
+                placeholder="인증번호 입력"
+                value={emailAuthCode}
+                disabled={!isEmailAuthActive || isCheckEmailAuth}
+                onChange={(e) => {
+                  setEmailAuthCode(e.target.value);
+                }}
+              />
               <button
                 type="button"
-                onClick={() => {
-                  alert('');
+                className=""
+                disabled={!isEmailAuthActive || isCheckEmailAuth}
+                onClick={async () => {
+                  const res = await API.post('api/auth/mails/verify', {
+                    email: userData.email,
+                    code: emailAuthCode,
+                  });
+                  setEmailAuthCode('');
+                  if (res.data === 'true') {
+                    alert('인증 완료');
+                    setIsCheckEmailAuth(true);
+                  }
+                  return alert('인증 실패');
                 }}
               >
                 인증하기
+              </button>
+              <button
+                type="button"
+                disabled={isCheckEmailAuth}
+                onClick={async () => {
+                  if (!emailRegex.test(userData.email)) return alert('메일 형식 에러');
+
+                  const res = await API.post('/api/auth/mails/send-verification', {
+                    email: userData.email,
+                  });
+                  if (res.data === 'true') {
+                    alert('이메일 인증 번호가 발송되었습니다.');
+                    setIsEmailAuthActive(true);
+                    return;
+                  }
+                  return alert('이메일 인증 번호 발송 실패');
+                }}
+              >
+                인증메일 발송
               </button>
             </div>
           </div>
@@ -113,7 +164,7 @@ const SignUp = () => {
                 </div>
               </div>
               <input
-                name="nickName"
+                name="nickname"
                 type="text"
                 className="input input-bordered "
                 required
@@ -126,11 +177,11 @@ const SignUp = () => {
               type="button"
               className="  h-5 flex justify-center items-center "
               onClick={async () => {
-                if (userData.nickName === '') return;
+                if (userData.nickname === '') return;
                 const res = await API.post('/api/auth/checkNickname', {
-                  nickName: userData.nickName,
+                  nickname: userData.nickname,
                 });
-                if (res.data.check) {
+                if (res.data === 'true') {
                   setIsCheckSameNickname(true);
                   alert('닉네임 체크 통과');
                   return;
