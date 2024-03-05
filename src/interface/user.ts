@@ -13,3 +13,5 @@ export interface UserInfo extends User {
   id: string;
   teamImg: string;
 }
+
+export interface LogInUser extends Pick<User, 'email' | 'password'> {}
