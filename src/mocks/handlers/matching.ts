@@ -106,7 +106,6 @@ const getMatchingList = http.get('/api/matching/list', async ({ request }) => {
   return HttpResponse.json(res);
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getMatching = http.get('/api/matching/:id', async ({ params }): Promise<any> => {
   const id = params.id as string;
   const matching = matchingList.filter((matching) => matching.id === id);
