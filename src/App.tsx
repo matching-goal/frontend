@@ -9,15 +9,15 @@ function App() {
   return (
     <BrowserRouter>
       <div>
-        <Link to={'/matchingList'}>매칭보기</Link>
+        <Link to={'/matching'}>매칭보기</Link>
         <Link to={'/createMatching'}>매칭 만들기</Link>
         <Link to={'/signUp'}>회원가입</Link>
       </div>
       <Routes>
-        <Route path="/matchingList" element={<MatchingListPage />}></Route>
+        <Route path="/matching" element={<MatchingListPage />}></Route>
         <Route path="/matching/:id" element={<MatchingPage />}></Route>
         <Route path="/createMatching" element={<CreateMatchingPage />}></Route>
-        <Route path="/updateMatching" element={<UpdateMatchingPage />}></Route>
+        <Route path="/updateMatching/:id" element={<UpdateMatchingPage />}></Route>
         <Route path="/signUp" element={<SignUpPage />}></Route>
       </Routes>
     </BrowserRouter>
