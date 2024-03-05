@@ -1,5 +1,5 @@
 import { HttpResponse, delay, http } from 'msw';
-import { CreateUser, UserInfo } from '../../interface/user';
+import { CreateUser, LogInUser, UserInfo } from '../../interface/user';
 
 let userList: UserInfo[] = [
   {
@@ -25,7 +25,7 @@ const getUser = http.get('/api/myPage/:id', async ({ params }): Promise<any> => 
   return HttpResponse.json(...user);
 });
 
-const createUser = http.post('api/auth/sign-up', async ({ request }): Promise<any> => {
+const createUser = http.post('/api/auth/sign-up', async ({ request }): Promise<any> => {
   const body = (await request.json()) as CreateUser;
   const newUser: UserInfo = {
     ...body,
@@ -66,10 +66,32 @@ const verifyAuthEmailCode = http.post('/api/auth/mails/verify', async ({ request
     return HttpResponse.json('false');
   }
 });
+
+const LogIn = http.post('/api/auth/sign-in', async ({ request }): Promise<any> => {
+  const body = (await request.json()) as LogInUser;
+  const targetUser = userList.filter((user) => user.email === body.email)[0];
+  if (!targetUser) {
+    return HttpResponse.json(
+      { error: '이메일 혹은 비밀번호가 틀립니다' },
+      { status: 401 }
+    );
+  }
+  if (!(targetUser.password === body.password)) {
+    return HttpResponse.json(
+      { error: '이메일 혹은 비밀번호가 틀립니다' },
+      { status: 401 }
+    );
+  }
+  return HttpResponse.json({
+    message: '로그인 성공',
+    token: '123456',
+  });
+});
 export const userHandlers = [
   getUser,
   createUser,
   checkSameNickname,
   sendAuthEmail,
   verifyAuthEmailCode,
+  // LogIn,
 ];
