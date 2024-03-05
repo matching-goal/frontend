@@ -6,7 +6,7 @@ import API from '../api/api';
 
 const useGetMatchingList = (query: string) => {
   return useSuspenseQuery<PreviewMatching[]>({
-    queryFn: async () => await API.get(`/api/matching/list?${query}`),
+    queryFn: async () => (await API.get(`/api/matching/list?${query}`)).data,
     queryKey: ['PreviewMatchingList', query],
   });
 };

@@ -3,8 +3,8 @@ import BASE_API_URL from '../constants/url';
 
 const API = {
   get: async (url: string) => {
-    const data = await axios.get(`${BASE_API_URL + url}`);
-    return data.data;
+    const res = await axios.get(`${BASE_API_URL + url}`);
+    return res;
   },
   post: async <T>(url: string, body: T) => {
     const res = await axios.post(`${BASE_API_URL + url}`, body);

@@ -23,14 +23,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ReactQueryProvider>
-          <MSW>
-            <nav>
-              <Link href={'/matchingList'}>매칭 리스트</Link>
-              <Link href={'/createMatching'}>매칭작성</Link>
-              <Link href={'/signUp'}>회원가입</Link>
-            </nav>
-            {children}
-          </MSW>
+          <nav>
+            <Link href={'/matchingList'}>매칭 리스트</Link>
+            <Link href={'/createMatching'}>매칭작성</Link>
+            <Link href={'/signUp'}>회원가입</Link>
+            <Link href={'/signIn'}>로그인</Link>
+          </nav>
+          {children}
         </ReactQueryProvider>
       </body>
     </html>

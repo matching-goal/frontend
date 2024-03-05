@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { CreateUser } from '../../interface/user';
 import API from '../../api/api';
-import { emailRegex } from '../../utils/regex';
+import { emailRegex, passwordRegex } from '../../utils/regex';
 import useRegisterUser from '@/mutations/user/useRegisterUser';
 
 const SignUp = () => {
@@ -41,6 +41,11 @@ const SignUp = () => {
     }
     if (!isCheckEmailAuth) {
       return alert('이메일 인증을 해주세요');
+    }
+    if (!passwordRegex.test(userData.password)) {
+      return alert(
+        '패스워드는 10자 이상 영어 숫자 필수 및 특수문자 !@#$%^&*() 사용이가능합니다'
+      );
     }
     registerUserMutation.mutate(userData);
   };
