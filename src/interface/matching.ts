@@ -19,7 +19,7 @@ export interface PreviewMatching extends MatchingBase {
 export interface ViewMatching extends PreviewMatching {
   img: string[];
   modified_date: string;
-  nickName: string;
+  nickname: string;
 }
 
 export interface CreateMatching extends MatchingBase {
