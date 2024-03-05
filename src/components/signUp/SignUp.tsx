@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { CreateUser } from '../../interface/user';
 import API from '../../api/api';
 import { emailRegex } from '../../utils/regex';
+import useRegisterUser from '@/mutations/user/useRegisterUser';
 
 const SignUp = () => {
   const [userData, setUserData] = useState<CreateUser>({
@@ -17,6 +18,8 @@ const SignUp = () => {
   const [isCheckEmailAuth, setIsCheckEmailAuth] = useState<boolean>(false);
   const [isEmailAuthActive, setIsEmailAuthActive] = useState<boolean>(false);
   const [emailAuthCode, setEmailAuthCode] = useState('');
+
+  const registerUserMutation = useRegisterUser();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === 'nickname') {
@@ -39,6 +42,7 @@ const SignUp = () => {
     if (!isCheckEmailAuth) {
       return alert('이메일 인증을 해주세요');
     }
+    registerUserMutation.mutate(userData);
   };
 
   return (
@@ -210,7 +214,11 @@ const SignUp = () => {
           </div>
         </div>
         <div className="card-actions items-center mt-5">
-          <button className="btn btn-active btn-neutral rounded-3xl text-xl">
+          <button
+            type="submit"
+            className="btn btn-active btn-neutral rounded-3xl text-xl"
+            disabled={registerUserMutation.isPending}
+          >
             회원 가입
           </button>
           <div className="">
