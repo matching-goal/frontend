@@ -4,7 +4,7 @@ import { CreateUser, UserInfo } from '../../interface/user';
 let userList: UserInfo[] = [
   {
     id: '1',
-    email: 'aaa.@naver.com',
+    email: 'aaa@naver.com',
     name: '김이박',
     nickname: '김땡땡',
     introduction: '',
@@ -15,7 +15,6 @@ let userList: UserInfo[] = [
   },
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getUser = http.get('/api/myPage/:id', async ({ params }): Promise<any> => {
   const id = params.id as string;
   const user = userList.filter((user) => user.id === id);
@@ -25,7 +24,7 @@ const getUser = http.get('/api/myPage/:id', async ({ params }): Promise<any> => 
   await delay(1000);
   return HttpResponse.json(...user);
 });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 const createUser = http.post('api/auth/sign-up', async ({ request }): Promise<any> => {
   const body = (await request.json()) as CreateUser;
   const newUser: UserInfo = {
@@ -49,9 +48,15 @@ const checkSameNickname = http.post('/api/auth/checkNickname', async ({ request 
   return HttpResponse.json('true');
 });
 
-const sendAuthEmail = http.post('/api/auth/mails/send-verification', async () => {
-  return HttpResponse.json('true');
-});
+const sendAuthEmail = http.post(
+  '/api/auth/mails/send-verification',
+  async ({ request }): Promise<any> => {
+    const body = (await request.json()) as { email: string };
+    const isSameEmail = userList.filter((user) => user.email === body.email).length > 0;
+    if (isSameEmail) return HttpResponse.json({ error: '이미 존재하는 이메일 입니다' });
+    return HttpResponse.json('true');
+  }
+);
 
 const verifyAuthEmailCode = http.post('/api/auth/mails/verify', async ({ request }) => {
   const body = (await request.json()) as { email: string; code: string };
