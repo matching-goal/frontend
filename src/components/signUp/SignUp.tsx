@@ -87,6 +87,7 @@ const SignUp = () => {
               />
             </label>
           </div>
+
           <div>
             <label className="form-control ">
               <div className="label">
@@ -110,24 +111,6 @@ const SignUp = () => {
                 <div className="label">
                   <span className="label-text">팀 이름(닉네임)</span>
                 </div>
-                <button
-                  type="button"
-                  className="border border-gray-300 h-5 flex justify-center items-center text-sm"
-                  onClick={async () => {
-                    if (userData.nickName === '') return;
-                    const res = await API.post('/api/auth/checkNickname', {
-                      nickName: userData.nickName,
-                    });
-                    if (res.data.check) {
-                      setIsCheckSameNickname(true);
-                      alert('이메일 체크 통과');
-                      return;
-                    }
-                    alert('이미 존재하는 닉네임 입니다');
-                  }}
-                >
-                  <span>중복검사</span>
-                </button>
               </div>
               <input
                 name="nickName"
@@ -137,6 +120,26 @@ const SignUp = () => {
                 onChange={handleChange}
               />
             </label>
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              className="  h-5 flex justify-center items-center "
+              onClick={async () => {
+                if (userData.nickName === '') return;
+                const res = await API.post('/api/auth/checkNickname', {
+                  nickName: userData.nickName,
+                });
+                if (res.data.check) {
+                  setIsCheckSameNickname(true);
+                  alert('닉네임 체크 통과');
+                  return;
+                }
+                alert('이미 존재하는 닉네임 입니다');
+              }}
+            >
+              <span>중복검사</span>
+            </button>
           </div>
           <div>
             <label className="form-control ">
