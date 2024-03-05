@@ -101,6 +101,7 @@ const SignUp = () => {
                   if (res.data === 'true') {
                     alert('인증 완료');
                     setIsCheckEmailAuth(true);
+                    return;
                   }
                   return alert('인증 실패');
                 }}
