@@ -10,13 +10,13 @@ const Matching = () => {
   const id = params.id as string;
   const { data: matching } = useGetMatching(id);
 
-  const useMatchingDeleteMutation = useDeleteMatching();
+  const matchingDeleteMutation = useDeleteMatching();
 
   const handleDeleteBtnClick = () => {
     if (!confirm('삭제 하시겠습니까?')) {
       return;
     }
-    useMatchingDeleteMutation.mutate(id);
+    matchingDeleteMutation.mutate(id);
   };
 
   return (
