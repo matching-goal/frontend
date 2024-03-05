@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_API_URL } from '../constants/url';
+import BASE_API_URL from '../constants/url';
 
 const API = {
   get: async (url: string) => {
