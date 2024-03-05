@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { CreateUser } from '../../interface/user';
 import API from '../../api/api';
@@ -85,7 +86,7 @@ const SignUp = () => {
               />
               <button
                 type="button"
-                className=""
+                className="text-sm"
                 disabled={!isEmailAuthActive || isCheckEmailAuth}
                 onClick={async () => {
                   const res = await API.post('api/auth/mails/verify', {
@@ -104,6 +105,7 @@ const SignUp = () => {
               </button>
               <button
                 type="button"
+                className="text-sm"
                 disabled={isCheckEmailAuth}
                 onClick={async () => {
                   if (!emailRegex.test(userData.email)) return alert('메일 형식 에러');

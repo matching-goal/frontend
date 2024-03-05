@@ -1,7 +1,7 @@
 import CreateMatchingContainer from '../../components/matching/CreateMatchingContainer';
 
-const CreateMatchingPage = () => {
+const page = () => {
   return <CreateMatchingContainer></CreateMatchingContainer>;
 };
 
-export default CreateMatchingPage;
+export default page;

@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import DateSelectorBtn from '../button/DateSelectorBtn';
 import TimeSelectorBtn from '../button/TimeSelectorBtn';

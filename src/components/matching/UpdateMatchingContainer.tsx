@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom';
+'use client';
+import { useParams } from 'next/navigation';
 import useGetMatching from '../../queries/useGetMatching';
 import CreateOrUpdateMatching from './CreateOrUpdateMatching';
 

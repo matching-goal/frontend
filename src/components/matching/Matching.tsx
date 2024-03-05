@@ -1,9 +1,12 @@
+'use client';
 import { Carousel } from 'react-responsive-carousel';
 import useDeleteMatching from '../../mutations/matching/useDeleteMatching';
 import useGetMatching from '../../queries/useGetMatching';
-import { Link, useParams } from 'react-router-dom';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 const Matching = () => {
   const params = useParams();
+
   const id = params.id as string;
   const { data: matching } = useGetMatching(id);
 
@@ -17,20 +20,20 @@ const Matching = () => {
   };
 
   return (
-    <article className="">
+    <article className="mt-10">
       <section>
         <h1 className="text-3xl">{matching.title}</h1>
       </section>
       <section className="mt-10 flex w-full justify-between pb-5 border-b-black border border-white">
-        <Link to={`/user/${matching.memberId}`} className="flex items-center">
+        <Link href={`/user/${matching.memberId}`} className="flex items-center">
           <figure className="w-[43px] h-[43px] mr-4">
             <img src={matching.teamImg} alt="유저 프로필"></img>
           </figure>
-          <p className="mr-4">{matching.nickName}</p>
+          <p className="mr-4">{matching.nickname}</p>
           <p>{matching.createdDate}</p>
         </Link>
         <div className="flex items-center">
-          <Link to={`/updateMatching/${matching.id}`}>
+          <Link href={`/updateMatching/${matching.id}`}>
             <button className="mr-5">수정</button>
           </Link>
           <button onClick={handleDeleteBtnClick}>삭제</button>
