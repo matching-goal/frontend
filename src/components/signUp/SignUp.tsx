@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CreateUser } from '../../interface/user';
+import API from '../../api/api';
 
 const SignUp = () => {
   const [userData, setUserData] = useState<CreateUser>({
@@ -9,6 +10,9 @@ const SignUp = () => {
     nickName: '',
     region: '',
   });
+  const [passwordCheck, setPasswordCheck] = useState<string>('');
+  const [isCheckSameNickname, setIsCheckSameNickname] = useState<boolean>(false);
+  const [isCheckEmailAuth, setIsCheckEmailAuth] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({
@@ -19,7 +23,11 @@ const SignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (userData.password !== passwordCheck) {
+      return alert('패스워드가 서로 다릅니다');
+    }
   };
+
   return (
     <form className=" card border-gray-300 border-2" onSubmit={handleSubmit}>
       <div className="card-body">
@@ -52,6 +60,17 @@ const SignUp = () => {
                 onChange={handleChange}
               />
             </label>
+            <div className="flex justify-between">
+              <input type="text" placeholder="인증번호 입력" />
+              <button
+                type="button"
+                onClick={() => {
+                  alert('');
+                }}
+              >
+                인증하기
+              </button>
+            </div>
           </div>
           <div>
             <label className="form-control ">
@@ -68,6 +87,7 @@ const SignUp = () => {
               />
             </label>
           </div>
+
           <div>
             <label className="form-control ">
               <div className="label">
@@ -79,14 +99,18 @@ const SignUp = () => {
                 className="input input-bordered "
                 required
                 minLength={10}
-                onChange={handleChange}
+                onChange={(e) => {
+                  setPasswordCheck(e.target.value);
+                }}
               />
             </label>
           </div>
           <div>
             <label className="form-control ">
-              <div className="label">
-                <span className="label-text">팀 이름(닉네임)</span>
+              <div className="flex items-center justify-between">
+                <div className="label">
+                  <span className="label-text">팀 이름(닉네임)</span>
+                </div>
               </div>
               <input
                 name="nickName"
@@ -96,6 +120,26 @@ const SignUp = () => {
                 onChange={handleChange}
               />
             </label>
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              className="  h-5 flex justify-center items-center "
+              onClick={async () => {
+                if (userData.nickName === '') return;
+                const res = await API.post('/api/auth/checkNickname', {
+                  nickName: userData.nickName,
+                });
+                if (res.data.check) {
+                  setIsCheckSameNickname(true);
+                  alert('닉네임 체크 통과');
+                  return;
+                }
+                alert('이미 존재하는 닉네임 입니다');
+              }}
+            >
+              <span>중복검사</span>
+            </button>
           </div>
           <div>
             <label className="form-control ">
