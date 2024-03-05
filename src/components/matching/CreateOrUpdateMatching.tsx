@@ -30,8 +30,8 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
   const [title, setTitle] = useState<string>(matching ? matching.title : '');
   const [content, setContent] = useState<string>(matching ? matching.content : '');
 
-  const CreateMatchingMutation = useCreateMatching();
-  const PatchMatchingMutation = usePatchMatching();
+  const createMatchingMutation = useCreateMatching();
+  const patchMatchingMutation = usePatchMatching();
   return (
     <>
       <section className="flex justify-between items-center mb-5">
@@ -86,7 +86,7 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
               matchingTime: `${hour}:${minute}`,
               stadium: address,
             };
-            CreateMatchingMutation.mutate(data);
+            createMatchingMutation.mutate(data);
           }
           if (type === 'update') {
             const data = {
@@ -97,7 +97,7 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
               matchingTime: `${hour}:${minute}`,
               stadium: address,
             };
-            PatchMatchingMutation.mutate({ data, id: matching?.id as string });
+            patchMatchingMutation.mutate({ data, id: matching?.id as string });
           }
         }}
       >
@@ -155,8 +155,8 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
               className="w-[130px] h-[30px] border rounded-2xl border-black"
               disabled={
                 type === 'create'
-                  ? CreateMatchingMutation.isPending
-                  : PatchMatchingMutation.isPending
+                  ? createMatchingMutation.isPending
+                  : patchMatchingMutation.isPending
               }
             >
               {type === 'update' ? '글 수정' : '글 작성'}
