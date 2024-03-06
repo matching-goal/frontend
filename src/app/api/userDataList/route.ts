@@ -9,7 +9,7 @@ let userList: UserInfo[] = [
     email: 'aaa@naver.com',
     name: '김이박',
     nickname: '김땡땡',
-    introduction: '',
+    introduction: '높은 승률을 자랑합니다.',
     region: '경기도 성남시',
     password: '123456789a',
     teamImg:
