@@ -1,5 +1,4 @@
 import API from '@/api/api';
-import { BASE_MOCK_API_URL } from '@/constants/url';
 import { NextResponse, NextRequest } from 'next/server';
 
 export const POST = async (req: NextRequest) => {
