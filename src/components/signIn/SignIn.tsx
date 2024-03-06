@@ -2,8 +2,10 @@
 
 import useLogInUser from '@/mutations/user/useLogInUser';
 import { useState } from 'react';
-
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 const SignIn = () => {
+  const router = useRouter();
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -15,12 +17,24 @@ const SignIn = () => {
       [e.target.name]: e.target.value,
     });
   };
+
   return (
     <form
       className=" card border-gray-300 border-2"
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        logInUserMutation.mutate(user);
+        const result = await signIn('user-credentials', {
+          ...user,
+          redirect: false,
+          callbackUrl: '/',
+        });
+        if (result?.error) {
+          console.log(result?.error);
+          return;
+        }
+        if (result) {
+          router.push('/');
+        }
       }}
     >
       <div className="card-body">
