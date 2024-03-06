@@ -22,7 +22,6 @@ export const DELETE = async (req: NextRequest, { params }: Params) => {
 
 export const PATCH = async (req: NextRequest, { params }: Params) => {
   const body = await req.json();
-  console.log(body);
   const res = await API.patch(`/api/matchingDataList?id=${params.id}`, body);
   return new NextResponse(JSON.stringify(res.data));
 };
