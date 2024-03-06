@@ -98,7 +98,7 @@ const SignUp = () => {
                 className="text-sm"
                 disabled={!isEmailAuthActive || isCheckEmailAuth}
                 onClick={async () => {
-                  const res = await API.post('api/auth/mails/verify', {
+                  const res = await API.post('/api/auth/mails/verify', {
                     email: userData.email,
                     code: emailAuthCode,
                   });
