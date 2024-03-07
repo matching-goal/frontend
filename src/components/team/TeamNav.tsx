@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import TeamCalendar from './TeamCalendar';
 import './calendar.css';
+import TeamMatchingHistoryList from './teamHistory/TeamHistoryList';
 const TeamNav = () => {
   const [active, setIsActive] = useState<'calendar' | 'matchingList' | 'review'>(
     'calendar'
@@ -37,7 +38,8 @@ const TeamNav = () => {
           </li>
         </ul>
       </nav>
-      {active === 'calendar' && <TeamCalendar></TeamCalendar>}
+      {active === 'calendar' && <TeamCalendar />}
+      {active === 'matchingList' && <TeamMatchingHistoryList />}
     </div>
   );
 };

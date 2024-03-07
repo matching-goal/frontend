@@ -27,3 +27,11 @@ export interface CreateMatching extends MatchingBase {
 }
 
 export interface PatchMatching extends Omit<MatchingBase, 'memberId'> {}
+
+export interface MatchingHistoryInfo {
+  id: string;
+  opponent: string;
+  result: string;
+  score1: number;
+  score2: number;
+}
