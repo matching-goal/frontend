@@ -15,6 +15,16 @@ let userList: UserInfo[] = [
     teamImg:
       'https://upload.wikimedia.org/wikipedia/ko/b/b1/FC_%EB%B0%94%EB%A5%B4%EC%85%80%EB%A1%9C%EB%82%98_%EB%A1%9C%EA%B3%A0.svg',
   },
+  {
+    id: '2',
+    email: 'bbb@naver.com',
+    name: '박김이',
+    nickname: '박땡땡',
+    introduction: '높은 승률을 자랑합니다.',
+    region: '경기도 성남시',
+    password: '123456789a',
+    teamImg: '',
+  },
 ];
 
 export const GET = async (): Promise<NextResponse<AxiosResponse<UserInfo[]>>> => {
