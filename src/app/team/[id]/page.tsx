@@ -7,7 +7,7 @@ const page = () => {
       <section>
         <TeamProfileContainer></TeamProfileContainer>
       </section>
-      <section>
+      <section className="mt-20">
         <TeamNav></TeamNav>
       </section>
     </article>
