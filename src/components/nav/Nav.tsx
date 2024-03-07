@@ -3,10 +3,7 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 
 const Nav = () => {
-  const { data: session, status } = useSession();
-  if (status === 'loading') {
-    return <></>;
-  }
+  const { data: session } = useSession();
   if (session) {
     return (
       <div>

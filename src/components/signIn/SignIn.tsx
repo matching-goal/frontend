@@ -4,6 +4,7 @@ import useLogInUser from '@/mutations/user/useLogInUser';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+
 const SignIn = () => {
   const router = useRouter();
   const [user, setUser] = useState({
