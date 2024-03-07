@@ -11,7 +11,11 @@ const TeamProfile = () => {
     <div className="max-w-screen-md mx-auto  w-full grid grid-cols-4  h-[150px]">
       <div className="col-span-1 flex items-center">
         <figure className="w-[100px] h-[100px]">
-          <img src={team.teamImg} alt="팀이미지" className="w-full h-full" />
+          <img
+            src={team.teamImg === '' ? '/defaultProfileImg.jpg' : team.teamImg}
+            alt="팀이미지"
+            className="w-full h-full"
+          />
         </figure>
       </div>
       <div className="flex flex-col justify-between h-full col-span-2">
