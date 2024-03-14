@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import ReactQueryProvider from './ReactQueryProvider';
 import Link from 'next/link';
@@ -9,8 +9,12 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import SessionProvider from './SessionProviders';
 import NavContainer from '@/components/nav/NavContainer';
 import { getServerSession } from 'next-auth';
+import Footer from '@/components/footer/Footer';
 
-const inter = Inter({ subsets: ['latin'] });
+const myFont = localFont({
+  src: './Jalnan2TTF.ttf',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -26,19 +30,14 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={myFont.className}>
         <ReactQueryProvider>
-          <nav>
-            <Link href={'/matchingList'}>매칭 리스트</Link>
-            <Link href={'/createMatching'}>매칭작성</Link>
-            <Link href={'/signUp'}>회원가입</Link>
-            <Link href={'/signIn'}>로그인</Link>
-          </nav>
           <SessionProvider session={session}>
             <NavContainer></NavContainer>
           </SessionProvider>
 
           {children}
+          <Footer></Footer>
         </ReactQueryProvider>
       </body>
     </html>
