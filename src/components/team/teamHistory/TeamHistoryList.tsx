@@ -13,6 +13,7 @@ const TeamMatchingHistoryList = () => {
         <TeamMatchingHistory
           key={teamMatchingHistoryInfo.id}
           historyInfo={teamMatchingHistoryInfo}
+          id={id}
         ></TeamMatchingHistory>
       ))}
     </section>
