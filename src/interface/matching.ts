@@ -30,8 +30,10 @@ export interface PatchMatching extends Omit<MatchingBase, 'memberId'> {}
 
 export interface MatchingHistoryInfo {
   id: string;
-  opponent: string;
-  result: string;
+  opponentImg: string;
+  opponentId: string;
+  opponentNickname: string;
+  is_win: boolean;
   score1: number;
   score2: number;
 }
