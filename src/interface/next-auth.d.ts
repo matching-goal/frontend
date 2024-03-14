@@ -5,7 +5,8 @@ declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: {
       nickname: string;
-      name: string;
+      teamImg: string;
+      id: string;
     };
     accessToken: JWT;
   }

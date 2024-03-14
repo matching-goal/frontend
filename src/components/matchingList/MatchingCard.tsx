@@ -5,7 +5,7 @@ interface Props {
 }
 const MatchingCard = ({ matching }: Props) => {
   return (
-    <article className=" w-[223px] h-[330px] ">
+    <li className=" w-[223px] h-[330px] ">
       <Link href={`/matching/${matching.id}`}>
         <div className="">
           <figure className="">
@@ -26,7 +26,7 @@ const MatchingCard = ({ matching }: Props) => {
           </div>
         </div>
       </Link>
-    </article>
+    </li>
   );
 };
 

@@ -1,19 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import TeamCalendar from './TeamCalendar';
 import './calendar.css';
 import TeamMatchingHistoryList from './teamHistory/TeamHistoryList';
+import { ErrorBoundary } from 'react-error-boundary';
 const TeamNav = () => {
   const [active, setIsActive] = useState<'calendar' | 'matchingList' | 'review'>(
     'calendar'
   );
   return (
     <div className="">
-      <nav className="w-full border border-t-black border-b-black h-[50px]">
-        <ul className="max-w-screen-sm mx-auto flex items-center h-full">
+      <nav className="w-full mb-5 flex justify-center">
+        <ul className="max-w-screen-sm mx-auto flex items-center h-full tabs tabs-bordered transition-all">
           <li
-            className={`${active === 'calendar' && 'font-bold underline'} mr-5`}
+            className={`${
+              active === 'calendar' && 'tab-active'
+            } tab transition-all duration-300`}
             onClick={() => {
               setIsActive('calendar');
             }}
@@ -21,15 +24,19 @@ const TeamNav = () => {
             일정 캘린더
           </li>
           <li
-            className={`${active === 'matchingList' && 'font-bold underline'} mr-5`}
+            className={`${
+              active === 'matchingList' && 'tab-active'
+            } tab transition-all duration-300`}
             onClick={() => {
               setIsActive('matchingList');
             }}
           >
-            내 경기 목록
+            지난 경기 목록
           </li>
           <li
-            className={`${active === 'review' && 'font-bold underline'}`}
+            className={`${
+              active === 'review' && 'tab-active'
+            } tab transition-all duration-300`}
             onClick={() => {
               setIsActive('review');
             }}
@@ -38,8 +45,12 @@ const TeamNav = () => {
           </li>
         </ul>
       </nav>
-      {active === 'calendar' && <TeamCalendar />}
-      {active === 'matchingList' && <TeamMatchingHistoryList />}
+      <ErrorBoundary fallback={<div>상세정보 로딩중 에러 발생</div>}>
+        <Suspense fallback={'상세정보 로딩중'}>
+          {active === 'calendar' && <TeamCalendar />}
+          {active === 'matchingList' && <TeamMatchingHistoryList />}
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 };

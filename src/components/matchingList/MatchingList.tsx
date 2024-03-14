@@ -9,11 +9,11 @@ const MatchingList = ({ query }: Props) => {
 
   return (
     <div>
-      <div className="grid grid-cols-3 gap-3">
+      <ul className="grid grid-cols-3 gap-3">
         {matchingList.map((matching) => (
           <MatchingCard key={matching.id} matching={matching}></MatchingCard>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };
