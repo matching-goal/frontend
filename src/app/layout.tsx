@@ -10,6 +10,7 @@ import SessionProvider from './SessionProviders';
 import NavContainer from '@/components/nav/NavContainer';
 import { getServerSession } from 'next-auth';
 import Footer from '@/components/footer/Footer';
+import { authOptions } from './api/auth/[...nextauth]/route';
 
 const myFont = localFont({
   src: './Jalnan2TTF.ttf',
@@ -26,20 +27,20 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
-
+  const session = await getServerSession(authOptions);
+  console.log(session);
   return (
-    <html lang="en">
-      <body className={myFont.className}>
-        <ReactQueryProvider>
-          <SessionProvider session={session}>
+    <SessionProvider session={session}>
+      <html lang="en">
+        <body className={myFont.className}>
+          <ReactQueryProvider>
             <NavContainer></NavContainer>
-          </SessionProvider>
 
-          {children}
-          <Footer></Footer>
-        </ReactQueryProvider>
-      </body>
-    </html>
+            {children}
+            <Footer></Footer>
+          </ReactQueryProvider>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
