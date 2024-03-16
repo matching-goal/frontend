@@ -7,7 +7,7 @@ const useCreateMatching = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: CreateMatching) => API.post(`/api/matching`, data),
+    mutationFn: (data: CreateMatching) => API.post(`/api/matching/write`, data),
 
     onSuccess: (data) => {
       queryClient.removeQueries({ queryKey: ['PreviewMatchingList'] });
