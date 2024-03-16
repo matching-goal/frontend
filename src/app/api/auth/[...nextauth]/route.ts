@@ -1,7 +1,14 @@
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import API from '@/api/api';
-import { UserInfo } from '@/interface/user';
-import NextAuth, { NextAuthOptions, RequestInternal } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+
+interface ResponseLogin {
+  accessToken: string;
+  refreshToken: string;
+  id: string;
+  nickname: string;
+  imageId: string;
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -13,15 +20,12 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
 
-      async authorize(
-        credentials: Record<any, any> | undefined,
-        req: Pick<RequestInternal, 'body' | 'query' | 'headers' | 'method'> | undefined
-      ) {
+      async authorize(credentials: Record<'email' | 'password', string> | undefined) {
         try {
           const res = await API.post('/api/auth/sign-in', {
             ...credentials,
           });
-          const user: UserInfo = res.data;
+          const user: ResponseLogin = res.data;
           return user;
         } catch (e) {
           throw new Error('존재하지 않거나 틀린 비밀번호 입니다');
@@ -38,24 +42,53 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt(data) {
-      const user = data.user as UserInfo;
+      const user = data.user as ResponseLogin;
       if (user?.nickname) {
         data.token.nickname = user.nickname;
+      }
+      if (user?.imageId) {
+        data.token.teamImg = user.imageId;
+      }
+      if (user?.id) {
+        data.token.id = user.id;
+      }
+      if (user?.accessToken) {
+        data.token.serverAccessToken = user.accessToken;
+      }
+      if (user?.refreshToken) {
+        data.token.refreshToken = user.refreshToken;
       }
       return data.token;
     },
     async session({ session, token }) {
       const nickname = token.nickname as string;
+      const teamImg = token.teamImg as string;
+      const id = token.id as string;
+      const accessToken = token.serverAccessToken as string;
+      const refreshToken = token.refreshToken as string;
       if (token.nickname && session.user) {
         session.user.nickname = nickname;
       }
+      if (token.teamImg && session.user) {
+        session.user.teamImg = teamImg;
+      } else {
+        session.user.teamImg = '';
+      }
+      if (token.id && session.user) {
+        session.user.id = id;
+      }
+      if (token.serverAccessToken && session.user) {
+        session.user.accessToken = accessToken;
+      }
+      if (token.refreshToken && session.user) {
+        session.user.refreshToken = refreshToken;
+      }
 
-      session.accessToken = token;
       return session;
     },
   },
 };
 
-export const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
