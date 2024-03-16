@@ -2,6 +2,7 @@ import { MatchingHistoryInfo } from '@/interface/matching';
 import { UserInfo } from '@/interface/user';
 import { getImageOrDefault } from '@/utils/image';
 import { useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
 
 interface Props {
   historyInfo: MatchingHistoryInfo;
@@ -19,12 +20,14 @@ const TeamMatchingHistory = ({ historyInfo, id }: Props) => {
       <div
         className={`flex-grow card bg-base-300 rounded-box p-5 w-full ${
           historyInfo.is_win ? 'text-green-600' : 'text-red-600'
-        }`}
-      >
+        }`}>
         <div className="flex justify-between items-center">
           <div className="flex flex-col items-center">
             <figure className="w-[100px] h-[100px] avatar rounded-full">
-              <img src={getImageOrDefault(teamData?.teamImg)} alt="팀이미지" />
+              <Image
+                src={getImageOrDefault(teamData?.teamImg)}
+                alt="팀이미지"
+              />
             </figure>
             <p className="mt-5">{teamData.nickname}</p>
           </div>
@@ -40,8 +43,7 @@ const TeamMatchingHistory = ({ historyInfo, id }: Props) => {
       <div
         className={`flex-grow card bg-base-300 rounded-box p-5 w-full ${
           historyInfo.is_win ? 'text-red-600' : 'text-green-600'
-        }`}
-      >
+        }`}>
         <div className="flex justify-between items-center">
           <div>
             <p className=" text-4xl">{historyInfo.score2}</p>
@@ -51,7 +53,10 @@ const TeamMatchingHistory = ({ historyInfo, id }: Props) => {
           </div>
           <div className="flex flex-col items-center">
             <figure className="w-[100px] h-[100px] avatar rounded-full">
-              <img src={getImageOrDefault(historyInfo.opponentImg)} alt="팀이미지" />
+              <Image
+                src={getImageOrDefault(historyInfo.opponentImg)}
+                alt="팀이미지"
+              />
             </figure>
             <p className="mt-5">{historyInfo.opponentNickname}</p>
           </div>
