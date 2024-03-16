@@ -8,30 +8,35 @@ import { Carousel } from 'react-responsive-carousel';
 import { ViewMatching } from '../../interface/matching';
 import useCreateMatching from '../../mutations/matching/useCreateMatching';
 import usePatchMatching from '../../mutations/matching/usePatchMatching';
+import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 interface Props {
   matching?: ViewMatching;
 }
 
 const CreateOrUpdateMatching = ({ matching }: Props) => {
   const type = matching ? 'update' : 'create';
-  const [hour, setHour] = useState<string>(
-    matching ? matching.matchingTime.split(':')[0] : '00'
-  );
+  const session = useSession();
+
+  const [hour, setHour] = useState<string>(matching ? matching.time.split(':')[0] : '00');
   const [minute, setMinute] = useState<string>(
-    matching ? matching.matchingTime.split(':')[1] : '00'
+    matching ? matching.time.split(':')[1] : '00'
   );
-  const [date, setDate] = useState<string>(
-    matching ? matching.matchingDate : '날짜 선택'
-  );
+  const [date, setDate] = useState<string>(matching ? matching.date : '날짜 선택');
   const [address, setAddress] = useState<string>(
-    matching ? matching.stadium : '구장 주소 선택'
+    matching ? `${matching.region} - ${matching.stadium}` : '구장 주소 선택'
   );
-  const [images, setImages] = useState<Array<string>>(matching ? matching.img : []);
+  const [images, setImages] = useState<Array<string>>(
+    matching ? (matching.img ? matching.img : []) : []
+  );
   const [title, setTitle] = useState<string>(matching ? matching.title : '');
   const [content, setContent] = useState<string>(matching ? matching.content : '');
 
   const createMatchingMutation = useCreateMatching();
   const patchMatchingMutation = usePatchMatching();
+  if (!session.data?.user) {
+    return <div>로그인 정보 관련 에러</div>;
+  }
   return (
     <>
       <section className="flex justify-between items-center mb-5">
@@ -41,8 +46,7 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
               onChange={(date) => {
                 setDate(date);
               }}
-              date={date}
-            ></DateSelectorBtn>
+              date={date}></DateSelectorBtn>
           </div>
           <div className="mr-5">
             <TimeSelectorBtn
@@ -51,18 +55,18 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
                 setMinute(minute);
               }}
               hour={hour}
-              minute={minute}
-            ></TimeSelectorBtn>
+              minute={minute}></TimeSelectorBtn>
           </div>
           <div>
-            <ImageUploadBtn setImages={setImages} images={images}></ImageUploadBtn>
+            <ImageUploadBtn
+              setImages={setImages}
+              images={images}></ImageUploadBtn>
           </div>
         </div>
         <div>
           <AddressSelectorBtn
             address={address}
-            setAddress={setAddress}
-          ></AddressSelectorBtn>
+            setAddress={setAddress}></AddressSelectorBtn>
         </div>
       </section>
       <form
@@ -76,15 +80,18 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
             alert('구장 위치를 선택해주세요');
             return;
           }
+          const [region, stadium] = address.split('- ');
+          if (!stadium) return alert('경기장 주소를 선택해주세요');
           if (type === 'create') {
             const data = {
               title,
               content,
               img: images,
-              memberId: 'a33',
-              matchingDate: date,
-              matchingTime: `${hour}:${minute}`,
-              stadium: address,
+              memberId: session.data?.user.id,
+              date: date,
+              time: `${hour}:${minute}`,
+              region,
+              stadium,
             };
             createMatchingMutation.mutate(data);
           }
@@ -93,17 +100,18 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
               title,
               content,
               img: images,
-              matchingDate: date,
-              matchingTime: `${hour}:${minute}`,
-              stadium: address,
+              date: date,
+              time: `${hour}:${minute}`,
+              memberId: session.data?.user.id,
+              region,
+              stadium,
             };
             patchMatchingMutation.mutate({ data, id: matching?.id as string });
           }
-        }}
-      >
+        }}>
         <section>
           <input
-            className="text-3xl outline-none border border-b-black pb-2 w-full border-white"
+            className="text-2xl input input-bordered w-full"
             placeholder="제목을 입력해주세요"
             required
             value={title}
@@ -114,14 +122,13 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
         </section>
         <section className="min-h-[450px] mt-3">
           <textarea
-            className="w-full h-[350px] outline-none "
+            className="w-full min-h-[350px] textarea textarea-bordered"
             placeholder="내용을 입력해주세요"
             required
             value={content}
             onChange={(e) => {
               setContent(e.target.value);
-            }}
-          ></textarea>
+            }}></textarea>
         </section>
         <section className="flex justify-between items-center">
           <div className="h-[150px]">
@@ -131,18 +138,22 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
               showStatus={false}
               showThumbs={false}
               selectedItem={images.length - 1}
-              className="w-[200px] "
-            >
+              className="w-[200px] ">
               {images.map((image, idx) => (
-                <div key={idx} className=" w-full h-[150px] relative">
-                  <img src={image} alt="" className="w-full h-full -z-20" />
+                <div
+                  key={idx}
+                  className=" w-full h-[150px] relative">
+                  <Image
+                    src={image}
+                    alt=""
+                    className="w-full h-full -z-20"
+                  />
                   <button
                     type="button"
                     className=" absolute  text-white right-1 top-1 rounded-full bg-black h-8 w-8 opacity-60 flex items-center justify-center"
                     onClick={() => {
                       setImages(images.filter((_, filterIdx) => idx !== filterIdx));
-                    }}
-                  >
+                    }}>
                     <div className="">X</div>
                   </button>
                 </div>
@@ -152,13 +163,12 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
           <div>
             <button
               type="submit"
-              className="w-[130px] h-[30px] border rounded-2xl border-black"
+              className="w-[130px] h-[30px] btn border-gray-300"
               disabled={
                 type === 'create'
                   ? createMatchingMutation.isPending
                   : patchMatchingMutation.isPending
-              }
-            >
+              }>
               {type === 'update' ? '글 수정' : '글 작성'}
             </button>
           </div>
