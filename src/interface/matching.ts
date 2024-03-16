@@ -1,10 +1,13 @@
+import { UserInfo } from './user';
+
 interface MatchingBase {
   memberId: string;
   title: string;
   stadium: string;
   content: string;
-  matchingDate: string;
-  matchingTime: string;
+  date: string;
+  time: string;
+  region: string;
 }
 
 export interface PreviewMatching extends MatchingBase {
@@ -22,7 +25,7 @@ export interface ViewMatching extends PreviewMatching {
   nickname: string;
 }
 
-export interface CreateMatching extends MatchingBase {
+export interface CreateMatching extends MatchingBase, Pick<UserInfo, 'memberId'> {
   img: string[];
 }
 

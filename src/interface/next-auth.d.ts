@@ -7,6 +7,8 @@ declare module 'next-auth' {
       nickname: string;
       teamImg: string;
       id: string;
+      accessToken: string;
+      refreshToken: string;
     };
     accessToken: JWT;
   }
