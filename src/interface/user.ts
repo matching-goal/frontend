@@ -10,7 +10,7 @@ export interface CreateUser extends User {}
 
 export interface UserInfo extends User {
   introduction: string;
-  id: string;
+  memberId: string;
   teamImg: string;
 }
 
