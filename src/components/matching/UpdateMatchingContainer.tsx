@@ -8,9 +8,9 @@ const UpdateMatchingContainer = () => {
   const id = params.id as string;
   const { data: matching } = useGetMatching(id);
   return (
-    <article className="mt-20 max-w-screen-md mx-auto ">
+    <section className="mt-20 max-w-screen-md mx-auto ">
       <CreateOrUpdateMatching matching={matching}></CreateOrUpdateMatching>
-    </article>
+    </section>
   );
 };
 
