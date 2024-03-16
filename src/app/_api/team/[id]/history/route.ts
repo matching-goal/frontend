@@ -11,8 +11,10 @@ const matchingHistoryBox: MatchingHistoryBox = {
     matchingHistoryList: [
       {
         id: '1',
-        opponent: '박땡땡',
-        result: 'win',
+        opponentNickname: '박땡땡',
+        opponentId: '2',
+        opponentImg: '',
+        is_win: true,
         score1: 3,
         score2: 2,
       },
@@ -22,8 +24,11 @@ const matchingHistoryBox: MatchingHistoryBox = {
     matchingHistoryList: [
       {
         id: '1',
-        opponent: '김땡땡',
-        result: 'lose',
+        opponentImg:
+          'https://upload.wikimedia.org/wikipedia/ko/b/b1/FC_%EB%B0%94%EB%A5%B4%EC%85%80%EB%A1%9C%EB%82%98_%EB%A1%9C%EA%B3%A0.svg',
+        opponentId: '1',
+        opponentNickname: '김땡땡',
+        is_win: false,
         score1: 2,
         score2: 3,
       },

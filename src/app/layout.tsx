@@ -11,6 +11,7 @@ import NavContainer from '@/components/nav/NavContainer';
 import { getServerSession } from 'next-auth';
 import Footer from '@/components/footer/Footer';
 import { authOptions } from './api/auth/[...nextauth]/route';
+import MSW from './MswProviders';
 
 const myFont = localFont({
   src: './Jalnan2TTF.ttf',
@@ -34,10 +35,12 @@ export default async function RootLayout({
       <html lang="en">
         <body className={myFont.className}>
           <ReactQueryProvider>
-            <NavContainer></NavContainer>
+            <MSW>
+              <NavContainer></NavContainer>
 
-            {children}
-            <Footer></Footer>
+              {children}
+              <Footer></Footer>
+            </MSW>
           </ReactQueryProvider>
         </body>
       </html>
