@@ -8,10 +8,11 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 import SessionProvider from './SessionProviders';
 import NavContainer from '@/components/nav/NavContainer';
-import { getServerSession } from 'next-auth';
+
 import Footer from '@/components/footer/Footer';
-import { authOptions } from './api/auth/[...nextauth]/route';
+
 import MSW from './MswProviders';
+import { getServerSession } from 'next-auth';
 
 const myFont = localFont({
   src: './Jalnan2TTF.ttf',
@@ -28,22 +29,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
-  console.log(session);
+  const session = await getServerSession();
   return (
-    <SessionProvider session={session}>
-      <html lang="en">
-        <body className={myFont.className}>
+    <html lang="en">
+      <body className={myFont.className}>
+        <SessionProvider session={session}>
           <ReactQueryProvider>
-            <MSW>
-              <NavContainer></NavContainer>
+            <NavContainer></NavContainer>
 
-              {children}
-              <Footer></Footer>
-            </MSW>
+            {children}
+            <Footer></Footer>
           </ReactQueryProvider>
-        </body>
-      </html>
-    </SessionProvider>
+        </SessionProvider>
+      </body>
+    </html>
   );
 }
