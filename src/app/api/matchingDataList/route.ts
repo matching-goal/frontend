@@ -5,8 +5,7 @@ let matchingList: ViewMatching[] = [
   {
     id: '1',
     memberId: '123',
-    teamImg:
-      'https://upload.wikimedia.org/wikipedia/ko/b/b1/FC_%EB%B0%94%EB%A5%B4%EC%85%80%EB%A1%9C%EB%82%98_%EB%A1%9C%EA%B3%A0.svg',
+    teamImg: '',
     title: '경기도 성남시에서 경기하실분 구해요~',
     createdDate: '2024-04-27',
     modified_date: '2024-04-28',
@@ -15,12 +14,7 @@ let matchingList: ViewMatching[] = [
     requestCount: 2,
     stadium: '땡땡경기장',
     region: '경기도 성남시 xx로',
-    img: [
-      'http://www.dreamparkcf.com/images/sub/res01_05.jpg',
-      'http://www.dreamparkcf.com/images/sub/res01_06.jpg',
-      'http://www.dreamparkcf.com/images/sub/res01_07.jpg',
-      'http://www.dreamparkcf.com/images/sub/res01_10.jpg',
-    ],
+    img: [],
     nickname: '김땡땡',
     date: '2024-05-12',
     content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
@@ -29,8 +23,7 @@ let matchingList: ViewMatching[] = [
   {
     id: '2',
     memberId: '124',
-    teamImg:
-      'https://upload.wikimedia.org/wikipedia/ko/b/b1/FC_%EB%B0%94%EB%A5%B4%EC%85%80%EB%A1%9C%EB%82%98_%EB%A1%9C%EA%B3%A0.svg',
+    teamImg: '',
     title: '서울시 강남구에서 경기하실분 구해요~',
     createdDate: '2024-04-27',
     modified_date: '2024-04-28',
@@ -39,12 +32,7 @@ let matchingList: ViewMatching[] = [
     requestCount: 3,
     stadium: '축구장',
     region: '서울시 강남구 xx로',
-    img: [
-      'http://www.dreamparkcf.com/images/sub/res01_05.jpg',
-      'http://www.dreamparkcf.com/images/sub/res01_06.jpg',
-      'http://www.dreamparkcf.com/images/sub/res01_07.jpg',
-      'http://www.dreamparkcf.com/images/sub/res01_10.jpg',
-    ],
+    img: [],
     nickname: '김땡땡',
     date: '2024-05-12',
     content: '매너있는 경기 추구합니다 1:1채팅 부탁드려요',
