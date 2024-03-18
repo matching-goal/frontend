@@ -5,8 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import DateSelectorBtn from '../button/DateSelectorBtn';
 import TimeSelectorBtn from '../button/TimeSelectorBtn';
 import { dateFormatRegex } from '../../utils/regex';
-
-const MatchingList = React.lazy(() => import('./MatchingList'));
+import MatchingList from './MatchingList';
 
 const MatchingListContainer = () => {
   const [date, setDate] = useState('날짜 선택');
@@ -24,8 +23,7 @@ const MatchingListContainer = () => {
                 date={date}
                 onChange={(e) => {
                   setDate(e);
-                }}
-              ></DateSelectorBtn>
+                }}></DateSelectorBtn>
             </div>
             <div>
               <TimeSelectorBtn
@@ -34,8 +32,7 @@ const MatchingListContainer = () => {
                 onChange={(hour, minute) => {
                   setHour(hour);
                   setMinute(minute);
-                }}
-              ></TimeSelectorBtn>
+                }}></TimeSelectorBtn>
             </div>
           </div>
           <div>
@@ -45,8 +42,7 @@ const MatchingListContainer = () => {
                 let query = '';
                 dateFormatRegex.test(date) && (query += `date=${date}`);
                 setQuery(query);
-              }}
-            >
+              }}>
               필터 적용
             </button>
           </div>

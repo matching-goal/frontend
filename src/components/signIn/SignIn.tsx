@@ -36,10 +36,9 @@ const SignIn = () => {
         if (result) {
           router.push('/');
         }
-      }}
-    >
+      }}>
       <div className="card-body">
-        <h3 className=" card-title text-2xl mb-5">회원 가입</h3>
+        <h3 className=" card-title text-2xl mb-5">로그인</h3>
         <div>
           <div className="flex justify-between">
             <label className="form-control w-full">
@@ -74,8 +73,7 @@ const SignIn = () => {
           <button
             type="submit"
             className="btn btn-active btn-neutral rounded-3xl text-xl"
-            disabled={logInUserMutation.isPending}
-          >
+            disabled={logInUserMutation.isPending}>
             로그인
           </button>
           <div className="">

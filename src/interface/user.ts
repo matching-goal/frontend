@@ -15,3 +15,8 @@ export interface UserInfo extends User {
 }
 
 export interface LogInUser extends Pick<User, 'email' | 'password'> {}
+
+export interface EditPassword {
+  oldPassword: string;
+  newPassword: string;
+}

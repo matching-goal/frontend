@@ -1,5 +1,5 @@
-import useGetMatchingList from '../../queries/useGetMatchingList';
 import MatchingCard from './MatchingCard';
+import useGetMatchingList from '@/queries/useGetMatchingList';
 
 interface Props {
   query: string;
@@ -11,7 +11,9 @@ const MatchingList = ({ query }: Props) => {
     <div>
       <ul className="grid grid-cols-3 gap-3">
         {matchingList.map((matching) => (
-          <MatchingCard key={matching.id} matching={matching}></MatchingCard>
+          <MatchingCard
+            key={matching.id}
+            matching={matching}></MatchingCard>
         ))}
       </ul>
     </div>
