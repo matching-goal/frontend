@@ -7,7 +7,7 @@ const useLogInUser = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (data: LogInUser) => API.post(`/api/auth/signIn`, data),
+    mutationFn: (data: LogInUser) => API.post(`/api/auth/sign-in`, data),
 
     onSuccess: () => {
       alert('로그인에 성공하셨습니다,');

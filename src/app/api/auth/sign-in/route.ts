@@ -25,5 +25,10 @@ export const POST = async (req: NextRequest) => {
       status: 401,
     });
   }
-  return new NextResponse(JSON.stringify(targetUser));
+  const resUser = {
+    ...targetUser,
+    accessToken: targetUser.memberId,
+    refreshToken: '54321',
+  };
+  return new NextResponse(JSON.stringify(resUser));
 };

@@ -3,7 +3,7 @@ import { CreateUser, LogInUser, UserInfo } from '../../interface/user';
 
 let userList: UserInfo[] = [
   {
-    id: '1',
+    memberId: '1',
     email: 'aaa@naver.com',
     name: '김이박',
     nickname: '김땡땡',
@@ -17,7 +17,7 @@ let userList: UserInfo[] = [
 
 const getUser = http.get('/api/myPage/:id', async ({ params }): Promise<any> => {
   const id = params.id as string;
-  const user = userList.filter((user) => user.id === id);
+  const user = userList.filter((user) => user.memberId === id);
   if (user.length === 0) {
     return HttpResponse.json({ error: '존재하지 않는 id입니다.' }, { status: 404 });
   }
@@ -30,7 +30,7 @@ const createUser = http.post('/api/auth/sign-up', async ({ request }): Promise<a
   const newUser: UserInfo = {
     ...body,
     introduction: '',
-    id: userList[userList.length - 1].id + 1,
+    memberId: userList[userList.length - 1].memberId + 1,
     teamImg: '',
   };
   userList = [...userList, newUser];
@@ -70,6 +70,9 @@ const verifyAuthEmailCode = http.post('/api/auth/mails/verify', async ({ request
 const LogIn = http.post('/api/auth/sign-in', async ({ request }): Promise<any> => {
   const body = (await request.json()) as LogInUser;
   const targetUser = userList.filter((user) => user.email === body.email)[0];
+  return HttpResponse.json({
+    body: '오이런..',
+  });
   if (!targetUser) {
     return HttpResponse.json(
       { error: '이메일 혹은 비밀번호가 틀립니다' },
@@ -84,14 +87,16 @@ const LogIn = http.post('/api/auth/sign-in', async ({ request }): Promise<any> =
   }
   return HttpResponse.json({
     message: '로그인 성공',
+    body: targetUser,
     token: '123456',
   });
 });
+
 export const userHandlers = [
   getUser,
   createUser,
   checkSameNickname,
   sendAuthEmail,
   verifyAuthEmailCode,
-  // LogIn,
+  LogIn,
 ];

@@ -29,10 +29,10 @@ const User = () => {
         tabIndex={0}
         className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
         <li>
-          <Link href={`/team/${session.user.id}`}> Profile</Link>
+          <Link href={`/team/${session.user.memberId}`}> Profile</Link>
         </li>
         <li>
-          <a>Settings</a>
+          <Link href={`/team/editPassword`}>Settings</Link>
         </li>
         <li>
           <a onClick={() => signOut({ redirect: false })}>Logout</a>

@@ -5,9 +5,10 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 interface ResponseLogin {
   accessToken: string;
   refreshToken: string;
-  id: string;
+  memberId: string;
   nickname: string;
   imageId: string;
+  id: string;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -22,10 +23,10 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials: Record<'email' | 'password', string> | undefined) {
         try {
-          console.log(credentials);
           const res = await API.post('/api/auth/sign-in', {
             ...credentials,
           });
+
           const user: ResponseLogin = res.data;
           return user;
         } catch (e) {
@@ -38,20 +39,21 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/signIn',
   },
-  // session: {
-  //   strategy: 'jwt',
-  // },
+  session: {
+    strategy: 'jwt',
+  },
   callbacks: {
     async jwt(data) {
       const user = data.user as ResponseLogin;
+
       if (user?.nickname) {
         data.token.nickname = user.nickname;
       }
       if (user?.imageId) {
         data.token.teamImg = user.imageId;
       }
-      if (user?.id) {
-        data.token.id = user.id;
+      if (user?.memberId) {
+        data.token.memberId = user.memberId;
       }
       if (user?.accessToken) {
         data.token.serverAccessToken = user.accessToken;
@@ -64,9 +66,10 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       const nickname = token.nickname as string;
       const teamImg = token.teamImg as string;
-      const id = token.id as string;
+      const memberId = token.memberId as string;
       const accessToken = token.serverAccessToken as string;
       const refreshToken = token.refreshToken as string;
+
       if (token.nickname && session.user) {
         session.user.nickname = nickname;
       }
@@ -75,8 +78,8 @@ export const authOptions: NextAuthOptions = {
       } else {
         session.user.teamImg = '';
       }
-      if (token.id && session.user) {
-        session.user.id = id;
+      if (token.memberId && session.user) {
+        session.user.memberId = memberId;
       }
       if (token.serverAccessToken && session.user) {
         session.user.accessToken = accessToken;

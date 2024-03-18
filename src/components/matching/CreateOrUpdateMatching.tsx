@@ -10,6 +10,7 @@ import useCreateMatching from '../../mutations/matching/useCreateMatching';
 import usePatchMatching from '../../mutations/matching/usePatchMatching';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+
 interface Props {
   matching?: ViewMatching;
 }
@@ -35,7 +36,7 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
   const createMatchingMutation = useCreateMatching();
   const patchMatchingMutation = usePatchMatching();
   if (!session.data?.user) {
-    return <div>로그인 정보 관련 에러</div>;
+    return <div></div>;
   }
   return (
     <>

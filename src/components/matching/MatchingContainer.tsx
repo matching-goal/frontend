@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-const Matching = React.lazy(() => import('./Matching'));
+import Matching from './Matching';
 
 const MatchingContainer = () => {
   return (

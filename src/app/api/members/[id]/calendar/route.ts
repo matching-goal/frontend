@@ -7,7 +7,7 @@ interface MatchingDateBox {
     matchingDateList: MatchingDateInfo[];
   };
 }
-type UserInfoSubset = Pick<UserInfo, 'id' | 'nickname'>;
+type UserInfoSubset = Pick<UserInfo, 'memberId' | 'nickname'>;
 
 interface MatchingPostData extends Omit<MatchingDateInfo, 'id' | 'opponent'> {
   teamA: UserInfoSubset;

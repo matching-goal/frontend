@@ -25,6 +25,8 @@ const TeamMatchingHistory = ({ historyInfo, id }: Props) => {
           <div className="flex flex-col items-center">
             <figure className="w-[100px] h-[100px] avatar rounded-full">
               <Image
+                width={100}
+                height={100}
                 src={getImageOrDefault(teamData?.teamImg)}
                 alt="팀이미지"
               />
@@ -54,6 +56,8 @@ const TeamMatchingHistory = ({ historyInfo, id }: Props) => {
           <div className="flex flex-col items-center">
             <figure className="w-[100px] h-[100px] avatar rounded-full">
               <Image
+                width={100}
+                height={100}
                 src={getImageOrDefault(historyInfo.opponentImg)}
                 alt="팀이미지"
               />

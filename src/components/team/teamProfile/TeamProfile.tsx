@@ -8,7 +8,7 @@ const TeamProfile = () => {
   const params = useParams();
   const id = params.id as string;
   const { data: team } = useGetTeam(id);
-
+  console.log(team);
   return (
     <div className="hero-content text-center max-w-screen-md mx-auto">
       <div className="">
@@ -16,12 +16,16 @@ const TeamProfile = () => {
         <div className="avatar">
           <div className=" w-52 rounded-full ">
             <Image
+              width={200}
+              height={200}
               src={getImageOrDefault(team.teamImg)}
               className="object-contain w-5 h-5"
               alt="팀 이미지"
             />
-            <div>{team.introduction}</div>
           </div>
+        </div>
+        <div>
+          <p>{team.introduction}</p>
         </div>
         <div className="stats shadow w-full">
           <div className="stat">

@@ -6,7 +6,7 @@ import { MatchingHistoryInfo } from '@/interface/matching';
 
 const useGetMatchingHistory = (id: string) => {
   return useSuspenseQuery<MatchingHistoryInfo[]>({
-    queryFn: async () => (await API.get(`/api/team/${id}/history`)).data,
+    queryFn: async () => (await API.get(`/api/members/${id}/history`)).data,
     queryKey: ['matchingHistory', id],
   });
 };

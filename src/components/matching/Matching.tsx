@@ -33,8 +33,8 @@ const Matching = () => {
             <Image
               src={getImageOrDefault(matching.teamImg)}
               alt="유저 프로필"
-              width={43}
-              height={43}></Image>
+              width={50}
+              height={50}></Image>
           </figure>
           <p className="mr-4">{matching.nickname}</p>
           <p>{matching.createdDate}</p>

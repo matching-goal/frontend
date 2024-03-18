@@ -1,7 +1,5 @@
 import TeamNav from '@/components/team/TeamNav';
 import TeamProfileContainer from '@/components/team/teamProfile/TeamProfileContainer';
-
-import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 const page = () => {
