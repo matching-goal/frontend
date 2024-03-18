@@ -5,7 +5,7 @@ import TimeSelectorBtn from '../button/TimeSelectorBtn';
 import AddressSelectorBtn from '../button/AddressSelectorBtn';
 import ImageUploadBtn from '../button/ImgUploadBtn';
 import { Carousel } from 'react-responsive-carousel';
-import { ViewMatching } from '../../interface/matching';
+import { PatchMatching, ViewMatching } from '../../interface/matching';
 import useCreateMatching from '../../mutations/matching/useCreateMatching';
 import usePatchMatching from '../../mutations/matching/usePatchMatching';
 import Image from 'next/image';
@@ -41,34 +41,38 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
   return (
     <>
       <section className="flex justify-between items-center mb-5">
-        <div className="flex relative items-center">
-          <div className="mr-5">
-            <DateSelectorBtn
-              onChange={(date) => {
-                setDate(date);
-              }}
-              date={date}></DateSelectorBtn>
-          </div>
-          <div className="mr-5">
-            <TimeSelectorBtn
-              onChange={(hour, minute) => {
-                setHour(hour);
-                setMinute(minute);
-              }}
-              hour={hour}
-              minute={minute}></TimeSelectorBtn>
-          </div>
-          <div>
-            <ImageUploadBtn
-              setImages={setImages}
-              images={images}></ImageUploadBtn>
-          </div>
-        </div>
-        <div>
-          <AddressSelectorBtn
-            address={address}
-            setAddress={setAddress}></AddressSelectorBtn>
-        </div>
+        {type === 'create' && (
+          <section>
+            <div className="flex relative items-center">
+              <div className="mr-5">
+                <DateSelectorBtn
+                  onChange={(date) => {
+                    setDate(date);
+                  }}
+                  date={date}></DateSelectorBtn>
+              </div>
+              <div className="mr-5">
+                <TimeSelectorBtn
+                  onChange={(hour, minute) => {
+                    setHour(hour);
+                    setMinute(minute);
+                  }}
+                  hour={hour}
+                  minute={minute}></TimeSelectorBtn>
+              </div>
+              <div>
+                <ImageUploadBtn
+                  setImages={setImages}
+                  images={images}></ImageUploadBtn>
+              </div>
+            </div>
+            <div>
+              <AddressSelectorBtn
+                address={address}
+                setAddress={setAddress}></AddressSelectorBtn>
+            </div>
+          </section>
+        )}
       </section>
       <form
         onSubmit={(e) => {
@@ -88,7 +92,7 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
               title,
               content,
               img: images,
-              memberId: session.data?.user.id,
+              memberId: session.data?.user.memberId,
               date: date,
               time: `${hour}:${minute}`,
               region,
@@ -97,15 +101,10 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
             createMatchingMutation.mutate(data);
           }
           if (type === 'update') {
-            const data = {
+            const data: PatchMatching = {
               title,
               content,
               img: images,
-              date: date,
-              time: `${hour}:${minute}`,
-              memberId: session.data?.user.id,
-              region,
-              stadium,
             };
             patchMatchingMutation.mutate({ data, id: matching?.id as string });
           }
