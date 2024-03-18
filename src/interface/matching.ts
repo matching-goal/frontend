@@ -29,7 +29,8 @@ export interface CreateMatching extends MatchingBase, Pick<UserInfo, 'memberId'>
   img: string[];
 }
 
-export interface PatchMatching extends Omit<MatchingBase, 'memberId'> {}
+export interface PatchMatching
+  extends Pick<CreateMatching, 'title' | 'content' | 'img'> {}
 
 export interface MatchingHistoryInfo {
   id: string;
