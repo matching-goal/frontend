@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { MatchingDateInfo } from '@/interface/calendar';
 import { UserInfo } from '@/interface/user';
-import { generateRandomNumber } from '@/utils/number';
 
 interface MatchingDateBox {
   [key: string]: {
@@ -44,5 +43,8 @@ interface Params {
 }
 export const GET = (req: NextRequest, { params }: Params) => {
   const data = matchingDateInfo[params.id].matchingDateList;
+  if (!data) {
+    return new NextResponse('에러요', { status: 404 });
+  }
   return new NextResponse(JSON.stringify(data));
 };

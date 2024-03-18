@@ -22,14 +22,13 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials: Record<'email' | 'password', string> | undefined) {
         try {
-          console.log(credentials);
           const res = await API.post('/api/auth/sign-in', {
             ...credentials,
           });
           const user: ResponseLogin = res.data;
           return user;
         } catch (e) {
-          throw new Error(`${e} Error`);
+          throw new Error('존재하지 않거나 틀린 비밀번호 입니다');
         }
       },
     }),
@@ -38,9 +37,9 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/signIn',
   },
-  // session: {
-  //   strategy: 'jwt',
-  // },
+  session: {
+    strategy: 'jwt',
+  },
   callbacks: {
     async jwt(data) {
       const user = data.user as ResponseLogin;

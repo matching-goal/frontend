@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { PreviewMatching } from '../../interface/matching';
+import Image from 'next/image';
 interface Props {
   matching: PreviewMatching;
 }
@@ -9,7 +10,9 @@ const MatchingCard = ({ matching }: Props) => {
       <Link href={`/matching/${matching.id}`}>
         <div className="">
           <figure className="">
-            <img
+            <Image
+              width={80}
+              height={80}
               src={matching.teamImg}
               alt="Shoes"
               className="rounded-xl h-[223px] w-[223px]"

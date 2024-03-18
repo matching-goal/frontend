@@ -4,9 +4,10 @@ import useDeleteMatching from '../../mutations/matching/useDeleteMatching';
 import useGetMatching from '../../queries/useGetMatching';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { getImageOrDefault } from '@/utils/image';
+import Image from 'next/image';
 const Matching = () => {
   const params = useParams();
-
   const id = params.id as string;
   const { data: matching } = useGetMatching(id);
 
@@ -25,9 +26,15 @@ const Matching = () => {
         <h1 className="text-3xl">{matching.title}</h1>
       </section>
       <section className="mt-10 flex w-full justify-between pb-5 border-b-black border border-white">
-        <Link href={`/user/${matching.memberId}`} className="flex items-center">
+        <Link
+          href={`/user/${matching.memberId}`}
+          className="flex items-center">
           <figure className="w-[43px] h-[43px] mr-4">
-            <img src={matching.teamImg} alt="유저 프로필"></img>
+            <Image
+              src={getImageOrDefault(matching.teamImg)}
+              alt="유저 프로필"
+              width={43}
+              height={43}></Image>
           </figure>
           <p className="mr-4">{matching.nickname}</p>
           <p>{matching.createdDate}</p>
@@ -47,11 +54,18 @@ const Matching = () => {
             infiniteLoop={true}
             autoPlay={true}
             showThumbs={false}
-            className="w-[200px]"
-          >
-            {matching.img.map((image, idx) => (
-              <div key={idx} className=" w-full h-[200px]">
-                <img src={image} alt="" className="w-full h-full" />
+            className="w-[200px]">
+            {matching.img?.map((image, idx) => (
+              <div
+                key={idx}
+                className=" w-full h-[200px]">
+                <Image
+                  width={200}
+                  height={200}
+                  src={image}
+                  alt=""
+                  className="w-full h-full"
+                />
               </div>
             ))}
           </Carousel>
@@ -60,7 +74,7 @@ const Matching = () => {
       <section className="flex justify-between items-center">
         <div>
           <p className="mb-4">{matching.stadium}</p>
-          <p>{`${matching.matchingDate} ${matching.matchingTime}`}</p>
+          <p>{`${matching.date} ${matching.time}`}</p>
         </div>
         <div>
           <button className="w-[130px] h-[30px] border rounded-2xl border-black mr-4">

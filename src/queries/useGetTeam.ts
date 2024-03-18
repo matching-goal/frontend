@@ -6,7 +6,7 @@ import { UserInfo } from '@/interface/user';
 
 const useGetTeam = (id: string) => {
   return useSuspenseQuery<UserInfo>({
-    queryFn: async () => (await API.get(`/api/team/${id}`)).data,
+    queryFn: async () => (await API.get(`/api/members/${id}`)).data,
     queryKey: ['Team', id],
   });
 };

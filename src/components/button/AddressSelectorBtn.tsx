@@ -25,10 +25,10 @@ const AddressSelectorBtn = ({ setAddress, address }: Props) => {
       if (data.buildingName !== '') {
         extraAddress +=
           extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+        extraAddress = extraAddress.split(' ')[1];
+        fullAddress += ` - ${extraAddress}`;
       }
-      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
-
     ref.current?.close();
     setPostCodeActive(false);
     setAddress(fullAddress);
@@ -42,18 +42,23 @@ const AddressSelectorBtn = ({ setAddress, address }: Props) => {
         onClick={() => {
           setPostCodeActive(true);
           ref.current?.showModal();
-        }}
-      >
+        }}>
         {address}
       </button>
-      <dialog id="my_modal_2" className="modal" ref={ref}>
+      <dialog
+        id="my_modal_2"
+        className="modal"
+        ref={ref}>
         {isPostCodeActive && (
           <>
             <div className="modal-box">
               <DaumPostcodeEmbed onComplete={handleComplete} />
             </div>
 
-            <form method="dialog" className="modal-backdrop" onClick={handleClick}>
+            <form
+              method="dialog"
+              className="modal-backdrop"
+              onClick={handleClick}>
               <button>close</button>
             </form>
           </>

@@ -1,6 +1,7 @@
 'use client';
 import useGetTeam from '@/queries/useGetTeam';
 import { getImageOrDefault } from '@/utils/image';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 const TeamProfile = () => {
@@ -14,9 +15,10 @@ const TeamProfile = () => {
         <h1 className="text-4xl font-bold mb-5">{team.nickname}</h1>
         <div className="avatar">
           <div className=" w-52 rounded-full ">
-            <img
+            <Image
               src={getImageOrDefault(team.teamImg)}
               className="object-contain w-5 h-5"
+              alt="팀 이미지"
             />
             <div>{team.introduction}</div>
           </div>
