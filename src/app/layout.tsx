@@ -2,17 +2,14 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import ReactQueryProvider from './ReactQueryProvider';
-import Link from 'next/link';
 import 'react-calendar/dist/Calendar.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
 import SessionProvider from './SessionProviders';
 import NavContainer from '@/components/nav/NavContainer';
-
 import Footer from '@/components/footer/Footer';
-
-import MSW from './MswProviders';
 import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/route';
+import { useRouter } from 'next/navigation';
 
 const myFont = localFont({
   src: './Jalnan2TTF.ttf',
@@ -29,7 +26,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={myFont.className}>
