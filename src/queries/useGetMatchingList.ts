@@ -1,11 +1,11 @@
 'use client';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { PreviewMatching } from '../interface/matching';
+import { ResponsePreviewMatchingList } from '../interface/matching';
 import API from '../api/api';
 
 const useGetMatchingList = (query: string) => {
-  return useSuspenseQuery<PreviewMatching[]>({
+  return useSuspenseQuery<ResponsePreviewMatchingList>({
     queryFn: async () => (await API.get(`/api/matching/list?${query}`)).data,
     queryKey: ['PreviewMatchingList', query],
   });

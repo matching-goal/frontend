@@ -6,13 +6,15 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { getImageOrDefault } from '@/utils/image';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import useCreateChatRoom from '@/mutations/chat/useCreateChatRoom';
 const Matching = () => {
   const params = useParams();
   const id = params.id as string;
   const { data: matching } = useGetMatching(id);
-
+  const session = useSession();
   const matchingDeleteMutation = useDeleteMatching();
-
+  const createChatRoomMutation = useCreateChatRoom();
   const handleDeleteBtnClick = () => {
     if (!confirm('삭제 하시겠습니까?')) {
       return;
@@ -27,7 +29,7 @@ const Matching = () => {
       </section>
       <section className="mt-10 flex w-full justify-between pb-5 border-b-black border border-white">
         <Link
-          href={`/user/${matching.memberId}`}
+          href={`/team/${matching.memberId}`}
           className="flex items-center">
           <figure className="w-[43px] h-[43px] mr-4">
             <Image
@@ -37,14 +39,16 @@ const Matching = () => {
               height={50}></Image>
           </figure>
           <p className="mr-4">{matching.nickname}</p>
-          <p>{matching.createdDate}</p>
+          <p>{matching.createdDate.split('T')[0]}</p>
         </Link>
-        <div className="flex items-center">
-          <Link href={`/updateMatching/${matching.id}`}>
-            <button className="mr-5">수정</button>
-          </Link>
-          <button onClick={handleDeleteBtnClick}>삭제</button>
-        </div>
+        {session.data?.user.memberId === matching.memberId && (
+          <div className="flex items-center">
+            <Link href={`/updateMatching/${matching.id}`}>
+              <button className="mr-5">수정</button>
+            </Link>
+            <button onClick={handleDeleteBtnClick}>삭제</button>
+          </div>
+        )}
       </section>
       <section className="min-h-[450px] mt-3 flex flex-col justify-between">
         <p>{matching.content}</p>
@@ -76,14 +80,24 @@ const Matching = () => {
           <p className="mb-4">{matching.stadium}</p>
           <p>{`${matching.date} ${matching.time}`}</p>
         </div>
-        <div>
-          <button className="w-[130px] h-[30px] border rounded-2xl border-black mr-4">
-            1:1 채팅
-          </button>
-          <button className="w-[130px] h-[30px] border rounded-2xl border-black">
-            매칭 신청
-          </button>
-        </div>
+
+        {session.data?.user.memberId !== matching.memberId && (
+          <div>
+            <button
+              className="btn border border-gray-300 rounded-2xl mr-4"
+              disabled={createChatRoomMutation.isPending}
+              onClick={() => {
+                createChatRoomMutation.mutate({ memberId: matching.memberId });
+              }}>
+              1:1 채팅
+            </button>
+            <button
+              className="btn border rounded-2xl border-gray-300"
+              disabled={createChatRoomMutation.isPending}>
+              매칭 신청
+            </button>
+          </div>
+        )}
       </section>
     </article>
   );

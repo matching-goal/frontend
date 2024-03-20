@@ -8,7 +8,7 @@ const TeamProfile = () => {
   const params = useParams();
   const id = params.id as string;
   const { data: team } = useGetTeam(id);
-  console.log(team);
+
   return (
     <div className="hero-content text-center max-w-screen-md mx-auto">
       <div className="">

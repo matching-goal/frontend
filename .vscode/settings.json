@@ -4,6 +4,7 @@
     "daisyui",
     "Jalnan",
     "nextauth",
+    "Pageable",
     "stompjs",
     "tailwindcss",
     "tanstack"

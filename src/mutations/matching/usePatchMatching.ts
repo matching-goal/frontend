@@ -16,7 +16,7 @@ const usePatchMatching = () => {
     mutationFn: ({ data, id }: Parameter) => API.patch(`/api/matching/${id}`, data),
 
     onSuccess: (req: AxiosResponse<ViewMatching>) => {
-      queryClient.setQueryData(['matching', req.data.id], req.data);
+      queryClient.setQueryData(['matching', `${req.data.id}`], req.data);
       router.push(`/matching/${req.data.id}`);
     },
   });

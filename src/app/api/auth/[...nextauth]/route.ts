@@ -28,6 +28,7 @@ export const authOptions: NextAuthOptions = {
           });
 
           const user: ResponseLogin = res.data;
+
           return user;
         } catch (e) {
           throw new Error(`${e} Error`);
