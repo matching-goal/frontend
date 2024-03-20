@@ -5,7 +5,7 @@ import { getSession } from 'next-auth/react';
 
 const API = {
   get: async (url: string) => {
-    const res = await axios.get(`${BASE_API_URL + url}`, {});
+    const res = await axios.get(`${BASE_API_URL + url}`);
     return res;
   },
   post: async <T>(url: string, body: T) => {
@@ -32,7 +32,7 @@ axios.interceptors.request.use(
   async (config) => {
     const session = await getSession();
     if (session?.user.accessToken) {
-      config.headers.Authorization = `${session.user.accessToken}`;
+      config.headers.Authorization = `Bearer ${session.user.accessToken}`;
     }
     return config;
   },
