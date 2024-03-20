@@ -37,12 +37,13 @@ const DateSelectorBtn = ({ onChange, date }: Props) => {
     };
   }, []);
   return (
-    <div className="" ref={ref}>
+    <div
+      className=""
+      ref={ref}>
       <button
         className="btn border border-gray-300 "
         type="button"
-        onClick={handleBtnClick}
-      >
+        onClick={handleBtnClick}>
         {date}
       </button>
       {show && (
@@ -51,8 +52,7 @@ const DateSelectorBtn = ({ onChange, date }: Props) => {
             calendarType="gregory"
             next2Label={null}
             prev2Label={null}
-            onChange={handleChange}
-          ></Calendar>
+            onChange={handleChange}></Calendar>
         </div>
       )}
     </div>

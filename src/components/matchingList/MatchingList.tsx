@@ -5,7 +5,8 @@ interface Props {
   query: string;
 }
 const MatchingList = ({ query }: Props) => {
-  const { data: matchingList } = useGetMatchingList(query);
+  const { data: ResponseMatchingList } = useGetMatchingList(query);
+  const matchingList = ResponseMatchingList.content;
 
   return (
     <div>

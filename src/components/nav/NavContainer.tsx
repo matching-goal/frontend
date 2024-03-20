@@ -1,8 +1,13 @@
+'use client';
 import Link from 'next/link';
 import NavUser from './user/NavUser';
-import Drawer from './Drawer';
+import { usePathname, useRouter } from 'next/navigation';
 
 const NavContainer = () => {
+  const pathName = usePathname();
+  if (pathName.split('/')[1] === 'chat') {
+    return;
+  }
   return (
     <header className=" max-w-screen-lg mx-auto">
       <div className="navbar bg-base-100">
@@ -12,13 +17,19 @@ const NavContainer = () => {
             <h1 className="btn btn-ghost text-xl">daisyUI</h1>
           </Link>
           <div className="hidden md:flex">
-            <Link className="btn" href={'/matchingList'}>
+            <Link
+              className="btn"
+              href={'/matchingList'}>
               매칭목록
             </Link>
-            <Link className="btn" href={'/teamList'}>
+            <Link
+              className="btn"
+              href={'/teamList'}>
               팀 목록
             </Link>
-            <Link className="btn" href={'/matching/1'}>
+            <Link
+              className="btn"
+              href={'/matching/1'}>
               팀 1
             </Link>
           </div>
