@@ -27,7 +27,6 @@ let userList: UserInfo[] = [
 ];
 
 export const GET = async (): Promise<NextResponse<AxiosResponse<UserInfo[]>>> => {
-  console.log(userList);
   return new NextResponse(JSON.stringify(userList));
 };
 
@@ -51,6 +50,6 @@ export const PATCH = async (req: NextRequest) => {
     }
     return user;
   });
-  console.log(userList);
+
   return HttpResponse.json(userList);
 };
