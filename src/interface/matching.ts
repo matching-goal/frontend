@@ -44,7 +44,7 @@ export interface MatchingHistoryInfo {
   score1: number;
   score2: number;
 }
-export interface PreviewMatchingList {
+export interface ResponsePreviewMatchingList {
   content: PreviewMatching[];
   pageable: Pageable;
   last: boolean;
