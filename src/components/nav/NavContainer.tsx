@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import NavUser from './user/NavUser';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const NavContainer = () => {
   const pathName = usePathname();
