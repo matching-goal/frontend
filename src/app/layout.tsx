@@ -9,7 +9,6 @@ import NavContainer from '@/components/nav/NavContainer';
 import Footer from '@/components/footer/Footer';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/route';
-import { useRouter } from 'next/navigation';
 
 const myFont = localFont({
   src: './Jalnan2TTF.ttf',

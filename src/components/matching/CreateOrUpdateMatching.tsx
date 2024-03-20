@@ -19,9 +19,9 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
   const type = matching ? 'update' : 'create';
   const session = useSession();
 
-  const [hour, setHour] = useState<string>(matching ? matching.time.split(':')[0] : '00');
+  const [hour, setHour] = useState<string>(matching ? matching.time.split(':')[0] : '');
   const [minute, setMinute] = useState<string>(
-    matching ? matching.time.split(':')[1] : '00'
+    matching ? matching.time.split(':')[1] : ''
   );
   const [date, setDate] = useState<string>(matching ? matching.date : '날짜 선택');
   const [address, setAddress] = useState<string>(
