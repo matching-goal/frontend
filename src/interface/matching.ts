@@ -29,11 +29,11 @@ export interface ViewMatching extends PreviewMatching {
 }
 
 export interface CreateMatching extends MatchingBase, Pick<UserInfo, 'memberId'> {
-  img: string[];
+  imgId: string[];
 }
 
 export interface PatchMatching
-  extends Pick<CreateMatching, 'title' | 'content' | 'img'> {}
+  extends Pick<CreateMatching, 'title' | 'content' | 'imgId'> {}
 
 export interface MatchingHistoryInfo {
   id: string;
