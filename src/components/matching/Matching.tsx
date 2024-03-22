@@ -8,6 +8,7 @@ import { getImageOrDefault } from '@/utils/image';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import useCreateChatRoom from '@/mutations/chat/useCreateChatRoom';
+import useRequestMatching from '@/mutations/matching/useRequestMatching';
 const Matching = () => {
   const params = useParams();
   const id = params.id as string;
@@ -15,6 +16,8 @@ const Matching = () => {
   const session = useSession();
   const matchingDeleteMutation = useDeleteMatching();
   const createChatRoomMutation = useCreateChatRoom();
+  const requestMatchingMutation = useRequestMatching();
+
   const handleDeleteBtnClick = () => {
     if (!confirm('삭제 하시겠습니까?')) {
       return;
@@ -93,7 +96,17 @@ const Matching = () => {
             </button>
             <button
               className="btn border rounded-2xl border-gray-300"
-              disabled={createChatRoomMutation.isPending}>
+              disabled={requestMatchingMutation.isPending}
+              onClick={() => {
+                if (!session.data) {
+                  return alert('로그인 사용자만 이용 가능합니다.');
+                }
+                confirm('신청 하시겠습니까?') &&
+                  requestMatchingMutation.mutate({
+                    id: id,
+                    memberId: session.data?.user.memberId,
+                  });
+              }}>
               매칭 신청
             </button>
           </div>
