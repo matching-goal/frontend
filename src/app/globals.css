@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Jalnan';
+  src: url('JalnanGothicTTF.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
