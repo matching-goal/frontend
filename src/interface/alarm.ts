@@ -1,4 +1,4 @@
-export interface alarm {
+export interface Alarm {
   id: string;
   memberId: string;
   type: string;

@@ -42,7 +42,7 @@ const EditPassword = () => {
               </div>
               <input
                 name="legacyPassword"
-                type="text"
+                type="password"
                 className="input input-bordered w-full"
                 required
                 onChange={(e) => {
@@ -58,7 +58,7 @@ const EditPassword = () => {
               </div>
               <input
                 name="password"
-                type="text"
+                type="password"
                 className="input input-bordered w-full"
                 required
                 onChange={(e) => {
@@ -74,7 +74,7 @@ const EditPassword = () => {
               </div>
               <input
                 name="checkPassword"
-                type="text"
+                type="password"
                 className="input input-bordered w-full"
                 required
                 onChange={(e) => {

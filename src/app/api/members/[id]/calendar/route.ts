@@ -17,8 +17,8 @@ const matchingDateInfo: MatchingDateBox = {
   '1': {
     matchingDateList: [
       {
-        id: 1,
-        opponent: '박땡땡',
+        gameId: 1,
+        opponentNickname: '박땡땡',
         date: '2024-04-15',
         time: '15:25',
         stadium: 'xx구장',
@@ -28,8 +28,8 @@ const matchingDateInfo: MatchingDateBox = {
   '2': {
     matchingDateList: [
       {
-        id: 1,
-        opponent: '김땡땡',
+        gameId: 1,
+        opponentNickname: '김땡땡',
         date: '2024-04-15',
         time: '15:25',
         stadium: 'xx구장',

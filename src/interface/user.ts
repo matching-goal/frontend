@@ -11,7 +11,7 @@ export interface CreateUser extends User {}
 export interface UserInfo extends User {
   introduction: string;
   memberId: string;
-  teamImg: string;
+  imageUrl: string;
 }
 
 export interface LogInUser extends Pick<User, 'email' | 'password'> {}

@@ -5,7 +5,7 @@ let matchingList: ViewMatching[] = [
   {
     id: '1',
     memberId: '123',
-    teamImg: '',
+    imageUrl: '',
     title: '경기도 성남시에서 경기하실분 구해요~',
     createdDate: '2024-04-27',
     modified_date: '2024-04-28',
@@ -23,7 +23,7 @@ let matchingList: ViewMatching[] = [
   {
     id: '2',
     memberId: '124',
-    teamImg: '',
+    imageUrl: '',
     title: '서울시 강남구에서 경기하실분 구해요~',
     createdDate: '2024-04-27',
     modified_date: '2024-04-28',
@@ -41,7 +41,7 @@ let matchingList: ViewMatching[] = [
   {
     id: '3',
     memberId: '125',
-    teamImg: '',
+    imageUrl: '',
     title: '경기도 용인시에서 경기하실분 구해요~',
     createdDate: '2024-04-27',
     modified_date: '2024-04-28',
@@ -59,7 +59,7 @@ let matchingList: ViewMatching[] = [
   {
     id: '4',
     memberId: '126',
-    teamImg: '',
+    imageUrl: '',
     title: '경기도 수원시에서 경기하실분 구해요~',
     createdDate: '2024-04-27',
     modified_date: '2024-04-28',
@@ -102,7 +102,7 @@ const postMatching = http.post('/api/matching', async ({ request }) => {
     id: matchingList[matchingList.length - 1].id + 1,
     nickname: '김땡땡',
     modified_date: '2024-04-28',
-    teamImg:
+    imageUrl:
       'https://upload.wikimedia.org/wikipedia/ko/b/b1/FC_%EB%B0%94%EB%A5%B4%EC%85%80%EB%A1%9C%EB%82%98_%EB%A1%9C%EA%B3%A0.svg',
 
     status: '모집중',

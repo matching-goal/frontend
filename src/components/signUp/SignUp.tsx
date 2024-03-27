@@ -4,6 +4,7 @@ import { CreateUser } from '../../interface/user';
 import API from '../../api/api';
 import { emailRegex, passwordRegex } from '../../utils/regex';
 import useRegisterUser from '@/mutations/user/useRegisterUser';
+import Link from 'next/link';
 
 const SignUp = () => {
   const [userData, setUserData] = useState<CreateUser>({
@@ -51,7 +52,9 @@ const SignUp = () => {
   };
 
   return (
-    <form className=" card border-gray-300 border-2" onSubmit={handleSubmit}>
+    <form
+      className=" card border-gray-300 border-2"
+      onSubmit={handleSubmit}>
       <div className="card-body">
         <h3 className=" card-title text-2xl mb-5">회원 가입</h3>
         <div>
@@ -83,9 +86,10 @@ const SignUp = () => {
                 disabled={isCheckEmailAuth}
               />
             </label>
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-3">
               <input
                 type="text"
+                className=" max-w-16"
                 placeholder="인증번호 입력"
                 value={emailAuthCode}
                 disabled={!isEmailAuthActive || isCheckEmailAuth}
@@ -95,54 +99,52 @@ const SignUp = () => {
               />
               <button
                 type="button"
-                className="text-sm"
+                className="btn btn-xs text-xs"
                 disabled={!isEmailAuthActive || isCheckEmailAuth}
                 onClick={async () => {
-                  const res = await API.post('/api/auth/mails/verify', {
+                  const res = await API.post('/api/mails/verify', {
                     email: userData.email,
                     code: emailAuthCode,
                   });
                   setEmailAuthCode('');
-                  if (res.data === 'true') {
+                  if (res.data === '인증성공') {
                     alert('인증 완료');
                     setIsCheckEmailAuth(true);
                     return;
                   }
                   return alert('인증 실패');
-                }}
-              >
+                }}>
                 인증하기
               </button>
               <button
                 type="button"
-                className="text-sm"
+                className="btn btn-xs text-xs"
                 disabled={isCheckEmailAuth}
                 onClick={async () => {
                   if (!emailRegex.test(userData.email)) return alert('메일 형식 에러');
 
-                  const res = await API.post('/api/auth/mails/send-verification', {
+                  const res = await API.post('/api/mails/send-verification', {
                     email: userData.email,
                   });
-                  if (res.data === 'true') {
+                  if (res.data === true) {
                     alert('이메일 인증 번호가 발송되었습니다.');
                     setIsEmailAuthActive(true);
                     return;
                   }
                   return alert('이메일 인증 번호 발송 실패');
-                }}
-              >
+                }}>
                 인증메일 발송
               </button>
             </div>
           </div>
           <div>
-            <label className="form-control ">
+            <label className="form-control">
               <div className="label">
                 <span className="label-text">패스워드</span>
               </div>
               <input
                 name="password"
-                type="text"
+                type="password"
                 className="input input-bordered "
                 required
                 minLength={10}
@@ -158,7 +160,7 @@ const SignUp = () => {
               </div>
               <input
                 name="passwordCheck"
-                type="text"
+                type="password"
                 className="input input-bordered "
                 required
                 minLength={10}
@@ -187,20 +189,20 @@ const SignUp = () => {
           <div className="flex justify-end">
             <button
               type="button"
-              className="  h-5 flex justify-center items-center "
+              className="  h-5 flex justify-center items-center btn btn-xs text-xs mt-3"
               onClick={async () => {
                 if (userData.nickname === '') return;
-                const res = await API.post('/api/auth/checkNickname', {
-                  nickname: userData.nickname,
-                });
-                if (res.data === 'true') {
+                const res = await API.post(
+                  `/api/members/checkNickname?nickname=${userData.nickname}`,
+                  {}
+                );
+                if (res.data === false) {
                   setIsCheckSameNickname(true);
                   alert('닉네임 체크 통과');
                   return;
                 }
                 alert('이미 존재하는 닉네임 입니다');
-              }}
-            >
+              }}>
               <span>중복검사</span>
             </button>
           </div>
@@ -223,13 +225,16 @@ const SignUp = () => {
           <button
             type="submit"
             className="btn btn-active btn-neutral rounded-3xl text-xl"
-            disabled={registerUserMutation.isPending}
-          >
+            disabled={registerUserMutation.isPending}>
             회원 가입
           </button>
           <div className="">
             <span>계정이 이미 있으신가요?</span>
-            <span>로그인</span>
+            <Link
+              className="text-decoration : underline"
+              href={'/signIn'}>
+              로그인
+            </Link>
           </div>
         </div>
       </div>

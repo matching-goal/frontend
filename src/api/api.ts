@@ -40,3 +40,18 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+axios.interceptors.response.use(
+  async (res) => {
+    return res;
+  },
+  async (error) => {
+    if (
+      error.response?.status === 401 &&
+      error.response.data.errorCode === 'EXPIRED_TOKEN'
+    ) {
+    }
+    const errorData = error.response.data;
+    return Promise.reject(errorData);
+  }
+);

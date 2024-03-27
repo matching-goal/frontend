@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import DateSelectorBtn from '../button/DateSelectorBtn';
 import TimeSelectorBtn from '../button/TimeSelectorBtn';
 import { dateFormatRegex } from '@/utils/regex';
@@ -9,13 +9,13 @@ interface Props {
   setQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const MatchingAndTeamListFilter = ({ setQuery, query }: Props) => {
+const MatchingAndTeamListFilter = ({ setQuery }: Props) => {
   const [date, setDate] = useState('날짜 선택');
   const [hour, setHour] = useState('');
   const [minute, setMinute] = useState('');
 
   return (
-    <section>
+    <section className="relative">
       <div className="flex justify-between">
         <div className="flex">
           <div className="mr-5">

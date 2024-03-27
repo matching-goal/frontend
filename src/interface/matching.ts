@@ -12,38 +12,55 @@ interface MatchingBase {
 
 export interface PreviewMatching extends MatchingBase {
   id: string;
-  teamImg: string;
+  imageUrl: string;
   createdDate: string;
   count: number;
   status: string;
   requestCount: number | null;
   nickname: string;
-  memberImg: null;
+  memberImg: string | null;
   viewCount: number;
 }
 
+export interface MatchingSimpleHistory {
+  winRate: number;
+  totalMatches: number;
+  wins: number;
+  losses: number;
+  draws: number;
+}
+
 export interface ViewMatching extends PreviewMatching {
-  img: string[];
+  imgUrls: string[];
   modified_date: string;
   nickname: string;
 }
 
 export interface CreateMatching extends MatchingBase, Pick<UserInfo, 'memberId'> {
-  imgId: string[];
+  imgUrls: string[];
 }
 
 export interface PatchMatching
-  extends Pick<CreateMatching, 'title' | 'content' | 'imgId'> {}
+  extends Pick<CreateMatching, 'title' | 'content' | 'imgUrls'> {}
 
 export interface MatchingHistoryInfo {
-  id: string;
+  resultId: string;
   opponentImg: string;
   opponentId: string;
   opponentNickname: string;
-  is_win: boolean;
+  win: boolean;
   score1: number;
   score2: number;
 }
+
+export interface RequestMatching {
+  id: string;
+  createDate: Date;
+  memberId: string;
+  nickname: string;
+  memberImg: string;
+}
+
 export interface ResponsePreviewMatchingList {
   content: PreviewMatching[];
   pageable: Pageable;
@@ -71,4 +88,10 @@ export interface Sort {
   empty: boolean;
   sorted: boolean;
   unsorted: boolean;
+}
+
+export interface ResultData {
+  score1: number;
+  score2: number;
+  duration: number;
 }

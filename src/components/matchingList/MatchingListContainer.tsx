@@ -10,22 +10,20 @@ const MatchingListContainer = () => {
   const [filterQuery, setFilterQuery] = useState('');
   const [sortQuery, setSortQuery] = useState('');
   const query = filterQuery + sortQuery;
-  console.log(query);
   return (
     <main>
       <section className=" max-w-screen-md mx-auto">
         <h1 className="text-center font-bold text-[30px]">매칭 목록</h1>
         <div className="flex justify-between">
-          <MatchingAndTeamListFilter
-            setQuery={setFilterQuery}
-            query={filterQuery}
-          />
+          <MatchingAndTeamListFilter setQuery={setFilterQuery} />
           <SelectSort setQuery={setSortQuery} />
         </div>
         <ErrorBoundary fallback={<h1>데이터 패칭 중 에러 발생</h1>}>
-          <Suspense fallback={<div>로딩중~</div>}>
-            <MatchingList query={query} />
-          </Suspense>
+          <div className="min-h-[600px]">
+            <Suspense fallback={<div>로딩중~</div>}>
+              <MatchingList query={query} />
+            </Suspense>
+          </div>
         </ErrorBoundary>
       </section>
     </main>

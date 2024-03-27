@@ -12,7 +12,7 @@ let userList: UserInfo[] = [
     introduction: '높은 승률을 자랑합니다.',
     region: '경기도 성남시',
     password: '123456789a',
-    teamImg: '',
+    imageUrl: '',
   },
   {
     memberId: '2',
@@ -22,7 +22,7 @@ let userList: UserInfo[] = [
     introduction: '높은 승률을 자랑합니다.',
     region: '경기도 성남시',
     password: '123456789a',
-    teamImg: '',
+    imageUrl: '',
   },
 ];
 
@@ -36,7 +36,7 @@ export const POST = async (req: NextRequest) => {
     ...body,
     introduction: '',
     memberId: userList[userList.length - 1].memberId + 1,
-    teamImg: '',
+    imageUrl: '',
   };
   userList = [...userList, newUser];
   return HttpResponse.json(newUser);

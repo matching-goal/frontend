@@ -10,7 +10,7 @@ declare module 'next-auth' {
 
 export interface User {
   nickname: string;
-  teamImg: string;
+  imageUrl: string;
   memberId: string;
   accessToken: string;
   refreshToken: string;
