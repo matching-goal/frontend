@@ -8,13 +8,20 @@ import { getImageOrDefault } from '@/utils/image';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import useCreateChatRoom from '@/mutations/chat/useCreateChatRoom';
+import useRequestMatching from '@/mutations/matching/useRequestMatching';
+
 const Matching = () => {
   const params = useParams();
   const id = params.id as string;
+
   const { data: matching } = useGetMatching(id);
+
   const session = useSession();
+
   const matchingDeleteMutation = useDeleteMatching();
   const createChatRoomMutation = useCreateChatRoom();
+  const requestMatchingMutation = useRequestMatching();
+
   const handleDeleteBtnClick = () => {
     if (!confirm('삭제 하시겠습니까?')) {
       return;
@@ -33,7 +40,7 @@ const Matching = () => {
           className="flex items-center">
           <figure className="w-[43px] h-[43px] mr-4">
             <Image
-              src={getImageOrDefault(matching.teamImg)}
+              src={getImageOrDefault(matching.imageUrl)}
               alt="유저 프로필"
               width={50}
               height={50}></Image>
@@ -41,17 +48,18 @@ const Matching = () => {
           <p className="mr-4">{matching.nickname}</p>
           <p>{matching.createdDate.split('T')[0]}</p>
         </Link>
-        {session.data?.user.memberId === matching.memberId && (
-          <div className="flex items-center">
-            <Link href={`/updateMatching/${matching.id}`}>
-              <button className="mr-5">수정</button>
-            </Link>
-            <button onClick={handleDeleteBtnClick}>삭제</button>
-          </div>
-        )}
+        {session.data?.user.memberId === `${matching.memberId}` &&
+          matching.status !== 'CLOSED' && (
+            <div className="flex items-center">
+              <Link href={`/updateMatching/${matching.id}`}>
+                <button className="mr-5">수정</button>
+              </Link>
+              <button onClick={handleDeleteBtnClick}>삭제</button>
+            </div>
+          )}
       </section>
       <section className="min-h-[450px] mt-3 flex flex-col justify-between">
-        <p>{matching.content}</p>
+        <p>{matching.status === 'CLOSED' ? '마감된 게시글 입니다' : matching.content}</p>
         <div>
           <Carousel
             showArrows={true}
@@ -59,7 +67,7 @@ const Matching = () => {
             autoPlay={true}
             showThumbs={false}
             className="w-[200px]">
-            {matching.img?.map((image, idx) => (
+            {matching.imgUrls?.map((image, idx) => (
               <div
                 key={idx}
                 className=" w-full h-[200px]">
@@ -77,27 +85,41 @@ const Matching = () => {
       </section>
       <section className="flex justify-between items-center">
         <div>
-          <p className="mb-4">{matching.stadium}</p>
+          <p className="mb-4">{`${matching.region} ${matching.stadium}`}</p>
           <p>{`${matching.date} ${matching.time}`}</p>
         </div>
 
-        {session.data?.user.memberId !== matching.memberId && (
-          <div>
-            <button
-              className="btn border border-gray-300 rounded-2xl mr-4"
-              disabled={createChatRoomMutation.isPending}
-              onClick={() => {
-                createChatRoomMutation.mutate({ memberId: matching.memberId });
-              }}>
-              1:1 채팅
-            </button>
-            <button
-              className="btn border rounded-2xl border-gray-300"
-              disabled={createChatRoomMutation.isPending}>
-              매칭 신청
-            </button>
-          </div>
-        )}
+        {session.data?.user.memberId !== `${matching.memberId}` &&
+          matching.status !== 'CLOSED' && (
+            <div>
+              <button
+                className="btn border border-gray-300 rounded-2xl mr-4"
+                disabled={createChatRoomMutation.isPending}
+                onClick={() => {
+                  createChatRoomMutation.mutate({
+                    guestId: matching.memberId,
+                    matchingBoardId: +id,
+                  });
+                }}>
+                1:1 채팅
+              </button>
+              <button
+                className="btn border rounded-2xl border-gray-300"
+                disabled={requestMatchingMutation.isPending}
+                onClick={() => {
+                  if (!session.data) {
+                    return alert('로그인 사용자만 이용 가능합니다.');
+                  }
+                  confirm('신청 하시겠습니까?') &&
+                    requestMatchingMutation.mutate({
+                      id: id,
+                      memberId: session.data?.user.memberId,
+                    });
+                }}>
+                매칭 신청
+              </button>
+            </div>
+          )}
       </section>
     </article>
   );

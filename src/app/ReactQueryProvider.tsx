@@ -13,7 +13,6 @@ const ReactQueryProvider = ({ children }: PropsWithChildren) => {
           retry: 0,
           refetchOnWindowFocus: false,
           refetchIntervalInBackground: false,
-          refetchOnMount: false,
           refetchOnReconnect: false,
         },
       },

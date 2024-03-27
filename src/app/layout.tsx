@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+
 import ReactQueryProvider from './ReactQueryProvider';
 import 'react-calendar/dist/Calendar.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import './calendar.css';
 import SessionProvider from './SessionProviders';
 import NavContainer from '@/components/nav/NavContainer';
 import Footer from '@/components/footer/Footer';
 import { getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]/route';
+import { authOptions } from './api/auth/authOptions';
 
 const myFont = localFont({
   src: './Jalnan2TTF.ttf',
@@ -32,8 +34,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <ReactQueryProvider>
             <NavContainer></NavContainer>
-
-            {children}
+            <div className="min-h-[600px]">{children}</div>
             <Footer></Footer>
           </ReactQueryProvider>
         </SessionProvider>

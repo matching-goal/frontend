@@ -1,6 +1,6 @@
 export interface MatchingDateInfo {
-  id: number;
-  opponent: string;
+  gameId: number;
+  opponentNickname: string;
   date: string;
   time: string;
   stadium: string;

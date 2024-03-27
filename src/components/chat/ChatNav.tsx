@@ -1,9 +1,5 @@
 const ChatNav = () => {
-  return (
-    <header className="p-2 bg-green-300 flex items-center">
-      <div className="">나가기</div>
-    </header>
-  );
+  return <header className="p-2 min-h-10 bg-green-300 flex items-center"></header>;
 };
 
 export default ChatNav;

@@ -8,8 +8,8 @@ import { Carousel } from 'react-responsive-carousel';
 import { PatchMatching, ViewMatching } from '../../interface/matching';
 import useCreateMatching from '../../mutations/matching/useCreateMatching';
 import usePatchMatching from '../../mutations/matching/usePatchMatching';
-import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 interface Props {
   matching?: ViewMatching;
@@ -27,14 +27,18 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
   const [address, setAddress] = useState<string>(
     matching ? `${matching.region} - ${matching.stadium}` : '구장 주소 선택'
   );
-  const [images, setImages] = useState<Array<string>>(
-    matching ? (matching.img ? matching.img : []) : []
+  const [previewImages, setPreviewImages] = useState<Array<string>>(
+    matching ? (matching.imgUrls ? matching.imgUrls : []) : []
+  );
+  const [imgUrls, setImgUrls] = useState<Array<string>>(
+    matching ? (matching.imgUrls ? matching.imgUrls : []) : []
   );
   const [title, setTitle] = useState<string>(matching ? matching.title : '');
   const [content, setContent] = useState<string>(matching ? matching.content : '');
 
   const createMatchingMutation = useCreateMatching();
   const patchMatchingMutation = usePatchMatching();
+
   if (!session.data?.user) {
     return <div></div>;
   }
@@ -43,7 +47,7 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
       <section className="flex justify-between items-center mb-5">
         {type === 'create' && (
           <section>
-            <div className="flex relative items-center">
+            <div className="flex relative items-center w-full">
               <div className="mr-5">
                 <DateSelectorBtn
                   onChange={(date) => {
@@ -60,16 +64,16 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
                   hour={hour}
                   minute={minute}></TimeSelectorBtn>
               </div>
-              <div>
+              <div className="mr-5">
                 <ImageUploadBtn
-                  setImages={setImages}
-                  images={images}></ImageUploadBtn>
+                  setImages={setImgUrls}
+                  images={imgUrls}></ImageUploadBtn>
               </div>
-            </div>
-            <div>
-              <AddressSelectorBtn
-                address={address}
-                setAddress={setAddress}></AddressSelectorBtn>
+              <div>
+                <AddressSelectorBtn
+                  address={address}
+                  setAddress={setAddress}></AddressSelectorBtn>
+              </div>
             </div>
           </section>
         )}
@@ -91,7 +95,7 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
             const data = {
               title,
               content,
-              img: images,
+              imgUrls,
               memberId: session.data?.user.memberId,
               date: date,
               time: `${hour}:${minute}`,
@@ -104,7 +108,7 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
             const data: PatchMatching = {
               title,
               content,
-              img: images,
+              imgUrls,
             };
             patchMatchingMutation.mutate({ data, id: matching?.id as string });
           }
@@ -137,9 +141,9 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
               infiniteLoop={true}
               showStatus={false}
               showThumbs={false}
-              selectedItem={images.length - 1}
+              selectedItem={previewImages.length - 1}
               className="w-[200px] ">
-              {images.map((image, idx) => (
+              {imgUrls.map((image, idx) => (
                 <div
                   key={idx}
                   className=" w-full h-[150px] relative">
@@ -147,12 +151,14 @@ const CreateOrUpdateMatching = ({ matching }: Props) => {
                     src={image}
                     alt=""
                     className="w-full h-full -z-20"
+                    width={80}
+                    height={80}
                   />
                   <button
                     type="button"
                     className=" absolute  text-white right-1 top-1 rounded-full bg-black h-8 w-8 opacity-60 flex items-center justify-center"
                     onClick={() => {
-                      setImages(images.filter((_, filterIdx) => idx !== filterIdx));
+                      setImgUrls(imgUrls.filter((_, filterIdx) => idx !== filterIdx));
                     }}>
                     <div className="">X</div>
                   </button>

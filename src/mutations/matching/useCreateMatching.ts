@@ -14,6 +14,9 @@ const useCreateMatching = () => {
       queryClient.setQueryData(['matching', data.data.id], data.data);
       router.push(`/matching/${data.data.id}`);
     },
+    onError: () => {
+      console.log('에러용에러');
+    },
   });
 };
 

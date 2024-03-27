@@ -10,7 +10,7 @@ let userList: UserInfo[] = [
     introduction: '',
     region: '경기도 성남시',
     password: '123456789a',
-    teamImg:
+    imageUrl:
       'https://upload.wikimedia.org/wikipedia/ko/b/b1/FC_%EB%B0%94%EB%A5%B4%EC%85%80%EB%A1%9C%EB%82%98_%EB%A1%9C%EA%B3%A0.svg',
   },
 ];
@@ -31,7 +31,7 @@ const createUser = http.post('/api/auth/sign-up', async ({ request }): Promise<a
     ...body,
     introduction: '',
     memberId: userList[userList.length - 1].memberId + 1,
-    teamImg: '',
+    imageUrl: '',
   };
   userList = [...userList, newUser];
   return HttpResponse.json(newUser);

@@ -11,10 +11,9 @@ const TeamMatchingHistoryList = () => {
     <section>
       {teamMatchingHistoryInfoList.map((teamMatchingHistoryInfo) => (
         <TeamMatchingHistory
-          key={teamMatchingHistoryInfo.id}
+          key={teamMatchingHistoryInfo.resultId}
           historyInfo={teamMatchingHistoryInfo}
-          id={id}
-        ></TeamMatchingHistory>
+          id={id}></TeamMatchingHistory>
       ))}
     </section>
   );

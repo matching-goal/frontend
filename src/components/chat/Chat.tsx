@@ -1,52 +1,55 @@
 'use client';
-import { client } from '@/chat/stomp';
 import { IMessage } from '@stomp/stompjs';
-import { useSession } from 'next-auth/react';
-import { useParams } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
 import ChatLog from './ChatLog';
-import { ResChatBody } from '@/interface/chat';
-
+import { chatMessage } from '@/interface/chat';
 import useGetChatLog from '@/queries/useGetChatLog';
 import { flushSync } from 'react-dom';
+import * as StompJs from '@stomp/stompjs';
+import BROKER_URL from '@/constants/brokerUrl';
+import Image from 'next/image';
 
-const Chat = () => {
-  const session = useSession();
-  const chatRoomId = useParams().id as string;
-  const [chatLog, setChatLog] = useState<ResChatBody[]>([]);
+interface Props {
+  nickname: string;
+  memberId: string;
+  chatRoomId: string;
+  memberImg: string;
+}
 
+const Chat = ({ chatRoomId, nickname, memberId, memberImg }: Props) => {
+  const [chatLog, setChatLog] = useState<chatMessage[]>([]);
   const { data } = useGetChatLog(chatRoomId);
-
   const inputRef = useRef<HTMLInputElement>(null);
   const chatLogObserveRef = useRef<HTMLDivElement>(null);
+  const [client, setClient] = useState<StompJs.Client>();
 
   const callback = (message: IMessage) => {
     if (message.body) {
-      const msg: ResChatBody = JSON.parse(message.body);
+      const msg: chatMessage = JSON.parse(message.body);
       flushSync(() => {
         setChatLog((chatLog) => [...chatLog, msg]);
       });
     }
   };
 
-  const disConnect = () => {
-    console.log('연결 종료!');
-    if (client === null) {
-      return;
-    }
-    client.deactivate();
-  };
+  const receiver = data.chatRoomMemberInfo.filter(
+    (member) => memberId !== `${member.memberId}`
+  )[0];
+  const receiverId = receiver.memberId;
 
   const sendChat = () => {
     const message = inputRef.current?.value;
     if (!message) return;
-
+    if (!client) {
+      return;
+    }
     client.publish({
       destination: `/pub/chat.message.${chatRoomId}`,
       body: JSON.stringify({
-        memberId: session.data?.user.memberId,
-        nickname: session.data?.user.nickname,
+        memberId: memberId,
+        nickname: nickname,
         message,
+        receiverId,
       }),
     });
 
@@ -54,51 +57,90 @@ const Chat = () => {
   };
 
   useEffect(() => {
+    const client = new StompJs.Client({
+      brokerURL: BROKER_URL,
+      connectHeaders: {
+        chatRoomId,
+        memberId: memberId,
+      },
+      debug: (str) => console.log(str),
+      disconnectHeaders: {
+        chatRoomId,
+        memberId: memberId,
+      },
+      reconnectDelay: 5000,
+    });
     const connect = () => {
       try {
         client.onConnect = () => {
           client.subscribe(`/exchange/chat.exchange/room.${chatRoomId}`, callback);
         };
         client.activate();
+        setClient(client);
       } catch (e) {
         console.error(`${e}`);
       }
     };
-    connect();
+
+    const disConnect = () => {
+      console.log('연결 종료!');
+      if (!client) {
+        return;
+      }
+      client.deactivate();
+    };
+    if (memberId && chatRoomId) {
+      connect();
+    }
 
     return () => {
       disConnect();
     };
-  }, [chatRoomId]);
+  }, [chatRoomId, memberId]);
 
   useEffect(() => {
-    setChatLog(data);
-  }, [chatRoomId, data]);
+    setChatLog(data.chatMessageList);
+  }, [data]);
   useEffect(() => {
     chatLogObserveRef.current?.scrollIntoView();
   }, [chatLog]);
 
-  if (!session.data) return <div>로그인 에러</div>;
   return (
-    <div className="max-w-screen-md mx-auto ">
-      <section className="p-5 ">
-        <ChatLog
-          ref={chatLogObserveRef}
-          chatLog={chatLog}
-          memberId={session.data.user.memberId}></ChatLog>
-      </section>
-      <form
-        action=""
-        onSubmit={(e) => {
-          e.preventDefault();
-          sendChat();
-        }}>
-        <input
-          className="input input-bordered input-sm w-full"
-          type="text"
-          ref={inputRef}
-        />
-      </form>
+    <div>
+      <header className="p-2 min-h-10 bg-green-300 ">
+        <div className="max-w-screen-md mx-auto flex justify-start items-center">
+          <Image
+            src={'/exit.svg'}
+            alt="exit"
+            width={30}
+            height={30}
+            className=" cursor-pointer"></Image>
+
+          <h2 className="ml-5">{`${receiver.memberNickname} 님 과의 대화`}</h2>
+        </div>
+      </header>
+      <div className="max-w-screen-md mx-auto ">
+        <section className="p-5 ">
+          <ChatLog
+            ref={chatLogObserveRef}
+            chatLog={chatLog}
+            memberId={memberId}
+            receiverImg={receiver.memberImgUrl}
+            memberImg={memberImg}></ChatLog>
+        </section>
+        <form
+          action=""
+          onSubmit={(e) => {
+            e.preventDefault();
+            sendChat();
+          }}>
+          <input
+            className="input input-bordered input-sm w-full"
+            type="text"
+            ref={inputRef}
+          />
+        </form>
+      </div>
     </div>
   );
 };

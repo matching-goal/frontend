@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react';
 import TeamCalendar from './TeamCalendar';
-import './calendar.css';
+
 import TeamMatchingHistoryList from './teamHistory/TeamHistoryList';
 import { ErrorBoundary } from 'react-error-boundary';
 const TeamNav = () => {
@@ -19,8 +19,7 @@ const TeamNav = () => {
             } tab transition-all duration-300`}
             onClick={() => {
               setIsActive('calendar');
-            }}
-          >
+            }}>
             일정 캘린더
           </li>
           <li
@@ -29,27 +28,23 @@ const TeamNav = () => {
             } tab transition-all duration-300`}
             onClick={() => {
               setIsActive('matchingList');
-            }}
-          >
+            }}>
             지난 경기 목록
           </li>
-          <li
+          {/* <li
             className={`${
               active === 'review' && 'tab-active'
             } tab transition-all duration-300`}
             onClick={() => {
               setIsActive('review');
-            }}
-          >
+            }}>
             한줄평 목록
-          </li>
+          </li> */}
         </ul>
       </nav>
       <ErrorBoundary fallback={<div>상세정보 로딩중 에러 발생</div>}>
-        <Suspense fallback={'상세정보 로딩중'}>
-          {active === 'calendar' && <TeamCalendar />}
-          {active === 'matchingList' && <TeamMatchingHistoryList />}
-        </Suspense>
+        {active === 'calendar' && <TeamCalendar />}
+        {active === 'matchingList' && <TeamMatchingHistoryList />}
       </ErrorBoundary>
     </div>
   );

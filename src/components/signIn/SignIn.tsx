@@ -2,10 +2,12 @@
 
 import useLogInUser from '@/mutations/user/useLogInUser';
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const SignIn = () => {
+  const session = useSession();
   const router = useRouter();
   const [user, setUser] = useState({
     email: '',
@@ -18,7 +20,9 @@ const SignIn = () => {
       [e.target.name]: e.target.value,
     });
   };
-
+  if (session.data) {
+    return <div>정상적이지 않은 접근입니다</div>;
+  }
   return (
     <form
       className=" card border-gray-300 border-2"
@@ -30,10 +34,12 @@ const SignIn = () => {
           callbackUrl: '/',
         });
         if (result?.error) {
-          console.log(result?.error);
+          const error = JSON.parse(result.error);
+          alert(error.message);
           return;
         }
         if (result) {
+          alert('로그인 성공');
           router.push('/');
         }
       }}>
@@ -61,7 +67,7 @@ const SignIn = () => {
               </div>
               <input
                 name="password"
-                type="text"
+                type="password"
                 className="input input-bordered w-full"
                 required
                 onChange={handleChange}
@@ -78,7 +84,11 @@ const SignIn = () => {
           </button>
           <div className="">
             <span>계정이 없으신가요?</span>
-            <span>회원가입</span>
+            <Link
+              className=" text-decoration : underline"
+              href={'/signUp'}>
+              회원가입
+            </Link>
           </div>
         </div>
       </div>
